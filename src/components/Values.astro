@@ -1,0 +1,38 @@
+---
+const lines: Array<[string, string, string?]> = [
+  ['Без интернета.', 'В приложении нет разрешения на интернет, текст не покидает телефон.'],
+  ['Без рекламы.', 'Ни баннеров, ни покупок внутри.'],
+  ['Без подписок.', 'Без подписок и пробных периодов.'],
+  ['Открытый код.', 'Исходники на GitHub.', 'https://github.com/kost-t-human/ruvoice-tts'],
+];
+---
+<section class="wrap sec values" aria-labelledby="values-title">
+  <h2 class="vh" id="values-title">Честно</h2>
+  <ul class="list">
+    {lines.map(([big, proof, href]) => (
+      <li>
+        <p class="big">{big}</p>
+        <p class="proof">{href ? <a href={href} id="values-github">{proof}</a> : proof}</p>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .list li { display: grid; gap: 4px 40px; grid-template-columns: minmax(0, 1fr); align-items: baseline; padding-block: 10px; border-bottom: 1px solid var(--line); }
+  @media (min-width: 900px) { .list li { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); } }
+  .big {
+    margin: 0; font-family: var(--font-display); font-weight: 560; letter-spacing: -.03em; line-height: 1;
+    font-size: clamp(2.4rem, 1rem + 4.6vw, 5rem); color: var(--ink);
+  }
+  .proof { margin: 0; color: var(--ink-2); font-size: 1.0625rem; }
+  .proof a { color: var(--ink); font-weight: 600; text-decoration-color: var(--amber); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  /* строки «прочитываются» при прокрутке: из приглушённого (контраст остаётся ≥ 4.5:1) в полный цвет */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .big { animation: read linear both; animation-timeline: view(); animation-range: entry 10% cover 40%; }
+      @keyframes read { from { color: var(--ink-3); } to { color: var(--ink); } }
+    }
+  }
+</style>

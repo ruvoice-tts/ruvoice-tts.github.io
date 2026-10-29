@@ -20,6 +20,7 @@
   --hi: rgba(255, 255, 255, .9);
   --shadow: rgba(22, 24, 46, .2);
   --grain-alpha: .05;
+  --band: #1F2470; --band-ink: #F4F1EA; --band-ink-2: #CACCEC; --band-line: #3A42A0;
   --font-display: "Literata Variable", Georgia, "Times New Roman", serif;
   --font-ui: "Golos Text Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color-scheme: light;
@@ -31,6 +32,7 @@
     --amber: #FFB938; --amber-glow: rgba(255, 185, 56, .5); --hl: rgba(255, 185, 56, .3);
     --lav: #2E3290; --peach: #4A2D58; --line: #272B5C; --outline: #6F74AA;
     --hi: rgba(255, 255, 255, .07); --shadow: rgba(0, 0, 0, .55); --grain-alpha: .07;
+    --band: #141842; --band-ink: #F2EFE8; --band-ink-2: #BDBFDA; --band-line: #2E3370;
     color-scheme: dark;
   }
 }
@@ -40,5 +42,6 @@
   --amber: #FFB938; --amber-glow: rgba(255, 185, 56, .5); --hl: rgba(255, 185, 56, .3);
   --lav: #2E3290; --peach: #4A2D58; --line: #272B5C; --outline: #6F74AA;
   --hi: rgba(255, 255, 255, .07); --shadow: rgba(0, 0, 0, .55); --grain-alpha: .07;
+    --band: #141842; --band-ink: #F2EFE8; --band-ink-2: #BDBFDA; --band-line: #2E3370;
   color-scheme: dark;
 }

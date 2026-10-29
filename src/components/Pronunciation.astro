@@ -1,0 +1,33 @@
+---
+import analyze from '../assets/screens/analyze.png';
+import ClayIcon from './ClayIcon.astro';
+import PhoneFrame from './PhoneFrame.astro';
+
+const rows: Array<['dict' | 'parse' | 'names' | 'move', string, string]> = [
+  ['dict', 'Свой словарь ударений и замен', 'Слово больше не будет звучать неверно.'],
+  ['parse', 'Разбор текста', 'Видно, что именно уйдёт в голос, с ударениями и паузами.'],
+  ['names', 'Вкладка «Имена»', 'Незнакомые имена собираются сами во время чтения: нажмите и выберите ударную гласную.'],
+  ['move', 'Перенос на другой телефон', 'Все настройки и словари одним файлом.'],
+];
+---
+<section class="wrap sec pron" aria-labelledby="pron-title">
+  <p class="eyebrow" data-thread="pin">Произношение</p>
+  <h2 class="sec-title" id="pron-title">Ошибся в слове? <em>Поправьте</em> один раз</h2>
+  <div class="cols">
+    <PhoneFrame src={analyze} alt="Окно «Разбор текста»: видно, как омографы «замке» и «замок» получили ударения по смыслу" />
+    <ul class="rows">
+      {rows.map(([icon, title, text]) => (
+        <li><ClayIcon name={icon} /><div><h3>{title}</h3><p>{text}</p></div></li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cols { display: grid; gap: 40px 72px; grid-template-columns: minmax(0, 1fr); align-items: center; justify-items: center; margin-top: 16px; }
+  @media (min-width: 960px) { .cols { grid-template-columns: auto minmax(0, 1fr); justify-items: stretch; } }
+  .rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; min-width: 0; }
+  .rows li { display: flex; gap: 18px; align-items: flex-start; }
+  h3 { margin: 4px 0 6px; font-size: 1.25rem; line-height: 1.25; }
+  .rows p { margin: 0; color: var(--ink-2); max-width: 32em; }
+</style>

@@ -49,9 +49,12 @@ export function initThread(): void {
       if (from && to[1] - from[1] > approach + 140) segs[segs.length - 1].push([x, from[1] + 64], [x, to[1] - approach]);
       segs[segs.length - 1].push(to);
     };
+    let prev = '';
     for (const el of document.querySelectorAll<HTMLElement>('[data-thread]')) {
       if (!el.getClientRects().length) continue;
-      const b = box(el), side = el.dataset.threadSide;
+      // после точки надзаголовка нить уходит влево, в поле: вправо она перечеркнула бы сам надзаголовок
+      const b = box(el), side = el.dataset.threadSide ?? (prev === 'pin' ? 'left' : undefined);
+      prev = el.dataset.thread ?? '';
       switch (el.dataset.thread) {
         case 'start': {
           const s: P = [b.x + (70.7 - 18) / 72 * b.w, b.y + (58.3 - 18) / 72 * b.h];

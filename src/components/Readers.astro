@@ -1,0 +1,42 @@
+---
+import voice from '../assets/screens/voice.png';
+import PhoneFrame from './PhoneFrame.astro';
+
+const readers = ['AlReaderX', 'Moon+ Reader', 'Cool Reader', 'FBReader', 'Librera', 'KOReader', 'и любая другая'];
+---
+<section class="wrap sec readers" aria-labelledby="readers-title">
+  <div class="cols">
+    <div class="text">
+      <p class="eyebrow" data-thread="pin">Читалки</p>
+      <h2 class="sec-title" id="readers-title">Работает там, где вы <em>уже</em> читаете</h2>
+      <p class="intro">RuVoice ставится как обычный голос Android, поэтому его видит любая читалка с функцией «Читать вслух».</p>
+      <div class="marquee">
+        <ul class="row">{readers.map(r => <li>{r}</li>)}</ul>
+        <ul class="row dup" aria-hidden="true">{readers.map(r => <li>{r}</li>)}</ul>
+      </div>
+      <p class="hint">Подсветка читаемого слова, если читалка это умеет.</p>
+    </div>
+    <PhoneFrame src={voice} alt="Вкладка «Голос» в приложении: выбор голоса, частота, темп и высота" />
+  </div>
+</section>
+
+<style>
+  .cols { display: grid; gap: 40px 64px; grid-template-columns: minmax(0, 1fr); align-items: center; justify-items: center; }
+  @media (min-width: 960px) { .cols { grid-template-columns: minmax(0, 1fr) auto; justify-items: stretch; } }
+  .text { display: flex; flex-direction: column; gap: 18px; min-width: 0; width: 100%; }
+  .marquee { display: flex; gap: 12px; overflow: hidden; margin-top: 8px; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .row { list-style: none; margin: 0; padding: 0; display: flex; gap: 12px; flex: none; animation: roll 28s linear infinite; }
+  .row li {
+    display: inline-flex; align-items: center; min-height: 52px; padding: 0 22px; border-radius: 999px; white-space: nowrap;
+    background: var(--card); border: 1px solid var(--line); font-weight: 600; font-size: 1.0625rem;
+  }
+  .row li:last-child { color: var(--ink-2); font-style: italic; }
+  .marquee:hover .row, .marquee:focus-within .row { animation-play-state: paused; }
+  @keyframes roll { to { transform: translateX(calc(-100% - 12px)); } }
+  .hint { margin: 0; color: var(--ink-2); }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { mask-image: none; }
+    .row { animation: none; flex-wrap: wrap; flex: 1; }
+    .dup { display: none; }
+  }
+</style>

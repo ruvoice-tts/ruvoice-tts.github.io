@@ -8,9 +8,9 @@ const reads = phrases.reads.map(r => ({ key: `reads/${r.id}`, ...S[`reads/${r.id
 const data = Object.fromEntries(reads.map(r => [r.key, { src: `${base}${r.file}`, raw: r.raw, display: r.display, duration: r.duration }]));
 const first = reads[0];
 ---
-<section class="wrap reads" id="reads" aria-labelledby="reads-title">
+<section class="wrap sec reads" id="reads" aria-labelledby="reads-title">
   <p class="eyebrow" data-thread="pin">Как читается</p>
-  <h2 id="reads-title">Цифры, даты и сокращения <em>по-русски</em></h2>
+  <h2 class="sec-title" id="reads-title">Цифры, даты и сокращения <em>по-русски</em></h2>
   <p class="intro">Нажмите на пример и послушайте. Движок сам склоняет числа и ставит ударения по смыслу.</p>
   <div class="grid">
     <div class="chips" role="group" aria-label="Примеры">
@@ -43,15 +43,6 @@ const first = reads[0];
 </script>
 
 <style>
-  .reads { padding-block: 88px 72px; display: flex; flex-direction: column; gap: 18px; }
-  .eyebrow {
-    margin: 0; display: inline-flex; align-items: center; gap: 10px; align-self: flex-start;
-    font-size: .8125rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2);
-  }
-  .eyebrow::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 4px var(--amber-glow); }
-  h2 { margin: 0; font-family: var(--font-display); font-weight: 560; font-size: clamp(2.2rem, 1.4rem + 3vw, 4rem); line-height: 1.04; letter-spacing: -.025em; text-wrap: balance; }
-  h2 em { font-style: italic; font-weight: 480; color: var(--accent-word); }
-  .intro { margin: 0; max-width: 36em; color: var(--ink-2); font-size: 1.125rem; }
   .grid { display: grid; gap: 24px 48px; grid-template-columns: minmax(0, 1fr); margin-top: 12px; align-items: center; }
   @media (min-width: 960px) { .grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
   .chips { display: flex; flex-wrap: wrap; gap: 10px; }

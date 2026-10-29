@@ -1,0 +1,54 @@
+---
+import samples from '../data/samples.json';
+
+const tb = samples.talkback;
+const src = `${import.meta.env.BASE_URL}${tb.file}`;
+---
+<section class="band" aria-labelledby="sr-title">
+  <div class="wrap sec inner">
+    <p class="eyebrow" data-thread="pin">С экранным чтецом</p>
+    <h2 class="sec-title" id="sr-title">С TalkBack — <em>как родной</em></h2>
+    <p class="intro">Темп до ×6, символы и эмодзи словами, коды и номера карт по цифрам, свои настройки для чтеца. Работает с TalkBack, Jieshuo и другими чтецами.</p>
+    <div class="actions">
+      <button type="button" class="play-pill" id="sr-play" aria-pressed="false" data-src={src}>
+        <span class="i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" /></svg></span>
+        Послушать: TalkBack на скорости ×3
+      </button>
+      <a class="more" href="/screen-reader/" id="sr-more">Всё о работе с чтецом</a>
+    </div>
+    <details class="transcript">
+      <summary>Что звучит</summary>
+      <ol>{tb.transcript.map(l => <li>{l}</li>)}</ol>
+    </details>
+  </div>
+</section>
+
+<script>
+  import { player } from '../scripts/player';
+  const btn = document.getElementById('sr-play')!;
+  btn.addEventListener('click', () => {
+    if (btn.getAttribute('aria-pressed') === 'true') { player.stop(); return; }
+    btn.setAttribute('aria-pressed', 'true');
+    const done = () => btn.setAttribute('aria-pressed', 'false');
+    void player.play(btn.dataset.src!, { onEnd: done, onError: done });
+  });
+</script>
+
+<style>
+  .band {
+    position: relative; z-index: 2; background: var(--band); color: var(--band-ink);
+    border-block: 1px solid var(--band-line);
+    --ink: var(--band-ink); --ink-2: var(--band-ink-2); --accent-word: #FFB938; --card: var(--band); --outline: var(--band-ink-2);
+    --bg-2: var(--band-line);
+  }
+  .inner { padding-block: 96px 88px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; margin-top: 8px; }
+  .more {
+    display: inline-flex; align-items: center; min-height: 48px; color: var(--band-ink); font-weight: 600;
+    text-decoration-color: #FFB938; text-decoration-thickness: 2px; text-underline-offset: 4px;
+  }
+  .transcript { color: var(--band-ink-2); }
+  .transcript summary { cursor: pointer; min-height: 44px; display: inline-flex; align-items: center; font-weight: 600; color: var(--band-ink); }
+  .transcript ol { margin: 4px 0 0; padding-left: 1.4em; }
+  .band :global(.play-pill .i) { background: #FFB938; color: #141842; }
+</style>
