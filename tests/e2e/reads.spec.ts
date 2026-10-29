@@ -17,3 +17,9 @@ test('расшифровка для чтеца приходит после об�
   await expect(chip).toHaveAttribute('aria-pressed', 'false', { timeout: 8000 });
   await expect(page.locator('#reads-live')).toHaveText('Читается: в двадцать один час тридцать минут');
 });
+
+test('с JS вместо списка — кнопки примеров', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#reads button.chip-read').first()).toBeVisible();
+  await expect(page.locator('#reads .reads-static')).toBeHidden();
+});

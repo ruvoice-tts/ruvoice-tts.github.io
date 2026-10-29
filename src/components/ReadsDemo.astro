@@ -26,6 +26,7 @@ const first = reads[0];
       <p class="out-said" id="reads-out-said">{first.display}</p>
     </div>
   </div>
+  <dl class="reads-static">{reads.map(r => <div><dt>{r.raw}</dt><dd>{r.display}</dd></div>)}</dl>
   <p class="vh" id="reads-live" aria-live="polite"></p>
   <div class="homo">
     <p class="homo-text">Король жил в з<mark>а́</mark>мке, а на двери висел зам<mark>о́</mark>к.</p>
@@ -57,6 +58,13 @@ const first = reads[0];
   .chip-read:hover { border-color: var(--ink); }
   .chip-read:active { transform: scale(.97); }
   .chip-read[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  /* без JS кнопки примеров не работают: вместо них весь список с расшифровкой */
+  .reads-static { display: none; margin: 12px 0 0; gap: 14px; }
+  :global(:root:not(.js)) .grid { display: none; }
+  :global(:root:not(.js)) .reads-static { display: grid; }
+  .reads-static div { display: grid; gap: 2px; }
+  .reads-static dt { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .reads-static dd { margin: 0; font-family: var(--font-display); font-size: 1.375rem; line-height: 1.2; }
   .out {
     min-height: 220px; display: flex; flex-direction: column; justify-content: center; gap: 12px;
     padding: 32px; border-radius: 30px; background: var(--card); border: 1px solid var(--line);
