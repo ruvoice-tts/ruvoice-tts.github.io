@@ -35,9 +35,14 @@ test('нет нормального релиза приложения — оши
 });
 
 test('сеть упала — берём снимок', async () => {
-  expect((await loadReleaseData({ fetch: () => Promise.reject(new Error('offline')) })).source).toBe('snapshot');
+  expect((await loadReleaseData({ fetch: () => Promise.reject(new Error('offline')), ci: false })).source).toBe('snapshot');
 });
 
 test('API ответил 403 — берём снимок', async () => {
-  expect((await loadReleaseData({ fetch: async () => new Response('', { status: 403 }) })).source).toBe('snapshot');
+  expect((await loadReleaseData({ fetch: async () => new Response('', { status: 403 }), ci: false })).source).toBe('snapshot');
+});
+
+// В CI снимок может быть старше вчерашнего деплоя: лучше упасть и оставить на сайте прошлую сборку.
+test('в CI API недоступен — сборка падает, а не откатывает сайт к снимку', async () => {
+  await expect(loadReleaseData({ fetch: () => Promise.reject(new Error('offline')), ci: true })).rejects.toThrow(/offline/);
 });

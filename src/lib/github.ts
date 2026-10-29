@@ -57,12 +57,15 @@ export async function fetchReleases(f: typeof fetch = fetch, token?: string): Pr
   return [...(list as unknown[]), packs];
 }
 
-export async function loadReleaseData(opts: { fetch?: typeof fetch; token?: string } = {}):
+/** Локально без сети — запасной снимок. В CI ошибка: снимок может быть старше прошлого деплоя,
+ *  пусть лучше сборка упадёт и на сайте останется прошлая. */
+export async function loadReleaseData(opts: { fetch?: typeof fetch; token?: string; ci?: boolean } = {}):
   Promise<ReleaseData & { source: 'api' | 'snapshot' }> {
   try {
     const raw = await fetchReleases(opts.fetch, opts.token ?? process.env.GITHUB_TOKEN);
     return { ...mapReleases(raw), source: 'api' };
   } catch (e) {
+    if (opts.ci ?? !!process.env.CI) throw e;
     console.warn(`[releases] API GitHub недоступен (${(e as Error).message}), беру src/data/snapshot.json`);
     return { ...mapReleases(snapshot as unknown[]), source: 'snapshot' };
   }
