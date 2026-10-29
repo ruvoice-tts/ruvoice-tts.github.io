@@ -28,9 +28,17 @@ export function initWizard(): void {
     form.querySelector<HTMLButtonElement>('#wizard-go')!.hidden = i !== steps.length - 1;
     if (focus) (steps[i].querySelector<HTMLInputElement>('input:checked') ?? steps[i].querySelector('input'))?.focus();
   };
-  const link = (href: string, text: string, label: string) => {
+  /** Ссылка, у которой видимая подпись целиком входит в имя для чтеца: [скрыто, видно, скрыто, видно…]. */
+  const link = (href: string, parts: string[]) => {
     const li = document.createElement('li'), a = document.createElement('a');
-    a.href = href; a.className = 'play-pill result-link'; a.textContent = text; a.setAttribute('aria-label', label);
+    a.href = href; a.className = 'play-pill result-link';
+    parts.forEach((t, i) => {
+      if (!t) return;
+      const span = document.createElement('span');
+      span.textContent = t;
+      if (i % 2 === 0) span.className = 'vh';
+      a.append(span);
+    });
     li.append(a);
     return li;
   };
@@ -50,14 +58,14 @@ export function initWizard(): void {
     const name = { full: 'Полная сборка', lite: 'Лёгкая сборка', rustore: 'RuStore' }[r.build];
     title.textContent = `Вам подойдёт: ${name}`;
     list.replaceChildren();
-    if (r.build === 'rustore') list.append(link(data.rustore, 'Открыть в RuStore', 'Открыть RuVoice в RuStore'));
+    if (r.build === 'rustore') list.append(link(data.rustore, ['', 'Открыть в RuStore']));
     else {
       const it = r.build === 'full' ? data.full : data.lite!;
-      list.append(link(it.url, `${name} · ${formatMB(it.size)}`, `Скачать: ${name}, версия ${data.version}, APK, ${formatMB(it.size)}`));
+      list.append(link(it.url, ['Скачать: ', name, `, версия ${data.version}, APK, `, formatMB(it.size)]));
     }
     for (const id of r.packs) {
       const p = data.packs.find(x => x.id === id)!;
-      list.append(link(p.url, `Пак «${p.title}» · ${formatMB(p.size)}`, `Скачать пак «${p.title}», ZIP, ${formatMB(p.size)}`));
+      list.append(link(p.url, ['Скачать: ', `Пак «${p.title}»`, ', ZIP, ', formatMB(p.size)]));
     }
     note.textContent = r.note;
     result.hidden = false;

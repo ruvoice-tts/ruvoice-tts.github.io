@@ -1,7 +1,5 @@
 ---
-import '@fontsource-variable/literata/opsz.css';
-import '@fontsource-variable/literata/opsz-italic.css';
-import '@fontsource-variable/golos-text';
+import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/sections.css';
@@ -26,6 +24,8 @@ const { release } = await getSite();
     <script is:inline>document.documentElement.classList.add('js');try{var t=localStorage.getItem('rv-theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="preload" href="/fonts/literata-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/golos-text-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />

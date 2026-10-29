@@ -12,7 +12,6 @@ const list = voices.filter(v => v.pack === p.id);
 const n = list.length || p.voices;
 const lang = { ru: 'русский', be: 'белорусский', uk: 'украинский' }[p.lang];
 const size = formatMB(p.size);
-const label = `Скачать пак «${p.title}», ZIP, ${size}`;
 const src = (key: string) => `${base}${S[key].file}`;
 const play = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>';
 const Tag = compact ? 'h3' : 'h2';
@@ -25,7 +24,7 @@ const Tag = compact ? 'h3' : 'h2';
   {!compact && p.license && <p class="meta">Лицензия: {p.license}</p>}
   {!compact && p.credits && <p class="meta">Авторство записей: {p.credits}</p>}
   <div class="actions">
-    <a class="pack-dl" href={p.url} aria-label={label} id={`${compact ? 'tease' : 'pack'}-${p.id}-dl`}>Скачать пак <span class="sz">{size}</span></a>
+    <a class="pack-dl" href={p.url} id={`${compact ? 'tease' : 'pack'}-${p.id}-dl`}>Скачать пак<span class="vh"> «{p.title}», ZIP,</span> <span class="sz">{size}</span></a>
     {list[0] && (
       <button type="button" class="play-pill" data-play={src(list[0].samples.book)} aria-pressed="false">
         <span class="i" aria-hidden="true" set:html={play} />Послушать<span class="vh">: {list[0].name ?? list[0].id}</span>

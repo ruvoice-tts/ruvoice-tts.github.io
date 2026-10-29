@@ -100,7 +100,7 @@ export function initThread(): void {
       l.glow.setAttribute('d', d); l.line.setAttribute('d', d);
       l.len = l.line.getTotalLength();
       l.ys = [];
-      for (let s = 0; s <= l.len; s += 24) l.ys.push([s, l.line.getPointAtLength(s).y]);
+      for (let s = 0; s <= l.len; s += 48) l.ys.push([s, l.line.getPointAtLength(s).y]);
       for (const p of [l.glow, l.line]) p.style.strokeDasharray = reduce.matches ? 'none' : String(l.len);
     });
     reveal();
@@ -119,20 +119,27 @@ export function initThread(): void {
     }
   }
 
-  let queued = false;
-  addEventListener('scroll', () => {
-    if (queued) return;
-    queued = true;
-    requestAnimationFrame(() => { queued = false; reveal(); });
-  }, { passive: true });
-  new ResizeObserver(() => layout()).observe(page);
-  reduce.addEventListener('change', layout);
-  layout();
-  (document.fonts?.ready ?? Promise.resolve()).then(() => {
+  // Нить — украшение: считается после загрузки страницы, в свободное время, чтобы не задерживать первую отрисовку.
+  const start = () => {
     layout();
+    let size = `${page.clientWidth}x${page.scrollHeight}`;
+    new ResizeObserver(() => {
+      const now = `${page.clientWidth}x${page.scrollHeight}`;
+      if (now !== size) { size = now; layout(); }
+    }).observe(page);
+    reduce.addEventListener('change', layout);
+    let queued = false;
+    addEventListener('scroll', () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => { queued = false; reveal(); });
+    }, { passive: true });
     if (reduce.matches) return;
     svg.classList.add('is-drawing');
     requestAnimationFrame(() => { ready = true; reveal(); });
     setTimeout(() => svg.classList.remove('is-drawing'), 1400);
-  });
+  };
+  const idle = (f: () => void) => ('requestIdleCallback' in window ? requestIdleCallback(f, { timeout: 1200 }) : setTimeout(f, 200));
+  if (document.readyState === 'complete') idle(start);
+  else addEventListener('load', () => idle(start), { once: true });
 }

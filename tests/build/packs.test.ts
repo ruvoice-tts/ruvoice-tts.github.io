@@ -16,7 +16,9 @@ test('у каждого пака заголовок и ссылка скачив
     expect(s.querySelector('h2')!.text.trim()).toBe(m.title);
     const a = s.querySelector('a.pack-dl')!;
     expect(a.getAttribute('href')).toBe(packs[id].url);
-    expect(a.getAttribute('aria-label')).toBe(`Скачать пак «${m.title}», ZIP, ${formatMB(packs[id].size)}`);
+    // имя ссылки для чтеца — её текст целиком (видимая подпись + скрытые для глаз части), без aria-label
+    expect(a.hasAttribute('aria-label')).toBe(false);
+    expect(a.text.replace(/\s+/g, ' ').trim()).toBe(`Скачать пак «${m.title}», ZIP, ${formatMB(packs[id].size)}`.replace(/\s+/g, ' '));
   }
 });
 

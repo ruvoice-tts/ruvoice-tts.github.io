@@ -13,7 +13,7 @@ test('никаких внешних шрифтов и скриптов', () => {
 });
 
 test('шрифты свои, woff2, есть кириллица', () => {
-  const f = distFiles('_astro');
+  const f = distFiles('');
   expect(f.some(n => /literata.*cyrillic.*\.woff2$/.test(n))).toBe(true);
   expect(f.some(n => /golos.*cyrillic.*\.woff2$/.test(n))).toBe(true);
 });
