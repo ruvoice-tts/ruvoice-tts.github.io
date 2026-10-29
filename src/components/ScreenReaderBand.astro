@@ -10,9 +10,9 @@ const src = `${import.meta.env.BASE_URL}${tb.file}`;
     <h2 class="sec-title" id="sr-title">С TalkBack — <em>как родной</em></h2>
     <p class="intro">Темп до ×6, символы и эмодзи словами, коды и номера карт по цифрам, свои настройки для чтеца. Работает с TalkBack, Jieshuo и другими чтецами.</p>
     <div class="actions">
-      <button type="button" class="play-pill" id="sr-play" aria-pressed="false" data-src={src}>
+      <button type="button" class="play-pill" id="sr-play" aria-pressed="false" data-play={src}>
         <span class="i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" /></svg></span>
-        Послушать: TalkBack на скорости ×3
+        <span class="label">Послушать: TalkBack на скорости ×3</span>
       </button>
       <a class="more" href="/screen-reader/" id="sr-more">Всё о работе с чтецом</a>
     </div>
@@ -22,17 +22,6 @@ const src = `${import.meta.env.BASE_URL}${tb.file}`;
     </details>
   </div>
 </section>
-
-<script>
-  import { player } from '../scripts/player';
-  const btn = document.getElementById('sr-play')!;
-  btn.addEventListener('click', () => {
-    if (btn.getAttribute('aria-pressed') === 'true') { player.stop(); return; }
-    btn.setAttribute('aria-pressed', 'true');
-    const done = () => btn.setAttribute('aria-pressed', 'false');
-    void player.play(btn.dataset.src!, { onEnd: done, onError: done });
-  });
-</script>
 
 <style>
   .band {

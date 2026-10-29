@@ -51,5 +51,9 @@ const { release } = await getSite();
       <slot />
       <Footer />
     </div>
+    <script>
+      import { initPlayButtons } from '../scripts/play-buttons';
+      initPlayButtons();
+    </script>
   </body>
 </html>

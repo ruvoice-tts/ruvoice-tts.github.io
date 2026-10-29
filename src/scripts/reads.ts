@@ -43,12 +43,4 @@ export function initReads(): void {
     });
   }
 
-  const homo = document.getElementById('homo-play');
-  const homoSrc = homo?.dataset.src;
-  homo?.addEventListener('click', () => {
-    if (homo.getAttribute('aria-pressed') === 'true') { player.stop(); return; }
-    homo.setAttribute('aria-pressed', 'true');
-    const done = () => homo.setAttribute('aria-pressed', 'false');
-    void player.play(homoSrc!, { onEnd: done, onError: done });
-  });
 }

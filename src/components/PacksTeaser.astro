@@ -12,11 +12,6 @@ const { packs } = await getSite();
   <a class="more" href="/packs/" id="packs-more">Все паки и как их поставить</a>
 </section>
 
-<script>
-  import { initPlayButtons } from '../scripts/play-buttons';
-  initPlayButtons(document.getElementById('packs-title')!.closest('section')!);
-</script>
-
 <style>
   /* две колонки: 4 пака — 2 × 2, 6 — 3 × 2, без карточки-сироты в последнем ряду */
   .grid { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); margin-top: 8px; }
