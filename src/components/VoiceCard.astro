@@ -1,0 +1,63 @@
+---
+export interface TunerVoice {
+  key: string; id: string; name: string | null; pack: string; lang: string; source: string; builtIn: boolean;
+}
+interface Props { v: TunerVoice; packTitle?: string }
+const { v, packTitle } = Astro.props;
+const origin = v.source === 'open' ? 'открытые записи' : v.source === 'mix' ? 'смесь штатных голосов' : 'Silero';
+const where = v.builtIn ? 'в полной сборке' : `пак «${packTitle ?? v.pack}»`;
+const note = v.lang === 'be' ? 'фраза на белорусском' : v.lang === 'uk' ? 'фраза на украинском' : null;
+const title = v.name ?? v.id;
+---
+<li class="voice" data-key={v.key} data-lang={v.lang} data-builtin={String(v.builtIn)}>
+  <div class="v-head">
+    <h3>{title}</h3>
+    {v.name && <span class="v-id">{v.id}</span>}
+  </div>
+  <p class="v-facts">{origin} · {where}</p>
+  {note && <p class="v-note">{note}</p>}
+  <div class="v-wave" aria-hidden="true"><svg><path d="M0 20" /></svg></div>
+  <button type="button" class="v-play" aria-pressed="false">
+    <span class="v-icon" aria-hidden="true">
+      <svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" /></svg>
+      <svg class="i-stop" viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1.2" /><rect x="13.5" y="5" width="4" height="14" rx="1.2" /></svg>
+    </span>
+    <span class="vlabel">Послушать</span><span class="vh">: {title}</span>
+  </button>
+</li>
+
+<style>
+  .voice {
+    flex: none; width: min(260px, 74vw); scroll-snap-align: center;
+    display: flex; flex-direction: column; gap: 10px; padding: 22px 20px 20px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 28px;
+    box-shadow: inset 0 1px 0 var(--hi), 0 22px 44px -28px var(--shadow);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .voice:global(.is-playing) { border-color: var(--amber); box-shadow: inset 0 1px 0 var(--hi), 0 0 0 3px var(--amber-glow), 0 22px 44px -28px var(--shadow); }
+  .v-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  h3 { margin: 0; font-family: var(--font-display); font-weight: 560; font-size: 1.75rem; letter-spacing: -.02em; line-height: 1.1; }
+  .v-id { font-size: .875rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .v-facts, .v-note { margin: 0; font-size: .9375rem; color: var(--ink-2); line-height: 1.4; }
+  .v-note { color: var(--ink-3); font-style: italic; }
+  .v-wave { height: 40px; margin-top: auto; }
+  .v-wave svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  .v-wave path { fill: none; stroke: var(--amber); stroke-width: 2.5; stroke-linecap: round; }
+  .v-play {
+    display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; min-height: 48px; padding: 0 20px 0 6px;
+    border-radius: 999px; border: 1px solid var(--outline); background: transparent; color: var(--ink);
+    font: inherit; font-weight: 650; cursor: pointer;
+  }
+  .v-play:hover { background: var(--bg-2); }
+  .v-icon { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--indigo); color: var(--on-indigo); }
+  .v-icon svg { width: 16px; height: 16px; }
+  .i-stop { display: none; }
+  .voice:global(.is-playing) .i-play { display: none; }
+  .voice:global(.is-playing) .i-stop { display: block; }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .voice { animation: tune linear both; animation-timeline: view(inline); animation-range: cover; }
+      @keyframes tune { 0%, 100% { transform: scale(.94); } 50% { transform: scale(1); } }
+    }
+  }
+</style>

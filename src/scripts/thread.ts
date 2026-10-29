@@ -10,14 +10,19 @@ type P = [number, number];
 const NS = 'http://www.w3.org/2000/svg';
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
 
-/** Кривая Катмулла — Рома через точки, как гладкие кубические Безье. */
-function spline(pts: P[]): string {
-  let d = `M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
+/** Центростремительная кривая Катмулла — Рома (alpha 0.5) через точки, как кубические Безье: на крутых поворотах
+ * не выбрасывает петли за край страницы, как обычная. Точки и опоры не выходят за [3, W − 3] по горизонтали. */
+function spline(pts: P[], W: number): string {
+  const cx = (x: number) => Math.min(W - 3, Math.max(3, x));
+  const f = (p: number[]) => `${cx(p[0]).toFixed(1)},${p[1].toFixed(1)}`;
+  const l = (a: P, b: P) => Math.sqrt(Math.max(1e-3, Math.hypot(b[0] - a[0], b[1] - a[1])));
+  let d = `M${f(pts[0])}`;
   for (let i = 0; i < pts.length - 1; i++) {
     const p0 = pts[i - 1] ?? pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] ?? p2;
-    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
-    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
-    d += ` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+    const d1 = l(p0, p1), d2 = l(p1, p2), d3 = l(p2, p3);
+    const b1 = [0, 1].map(k => (d1 * d1 * p2[k] - d2 * d2 * p0[k] + (2 * d1 * d1 + 3 * d1 * d2 + d2 * d2) * p1[k]) / (3 * d1 * (d1 + d2)));
+    const b2 = [0, 1].map(k => (d3 * d3 * p1[k] - d2 * d2 * p3[k] + (2 * d3 * d3 + 3 * d3 * d2 + d2 * d2) * p2[k]) / (3 * d3 * (d3 + d2)));
+    d += ` C${f(b1)} ${f(b2)} ${f(p2)}`;
   }
   return d;
 }
@@ -64,7 +69,7 @@ export function initThread(): void {
           break;
         case 'needle': {
           const cx = b.x + b.w / 2;
-          go([cx, b.y - 24], side);
+          go([cx, b.y + 8], side, 14); // к стрелке подходим в зазоре над карточками, не задевая кнопки фильтров
           segs[segs.length - 1].push([cx, b.y + b.h + 24]);
           break;
         }
@@ -88,7 +93,7 @@ export function initThread(): void {
       lines.push({ glow, line, len: 0, ys: [] });
     }
     segs.forEach((pts, i) => {
-      const l = lines[i], d = spline(pts);
+      const l = lines[i], d = spline(pts, W);
       l.glow.setAttribute('d', d); l.line.setAttribute('d', d);
       l.len = l.line.getTotalLength();
       l.ys = [];
