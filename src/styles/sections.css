@@ -1,15 +1,13 @@
-/* Общее для разделов: надзаголовок с янтарной точкой (через неё идёт нить), заголовок, вводный абзац,
+/* Общее для разделов: надзаголовок с янтарной точкой, заголовок, вводный абзац,
    кнопка «Послушать» с круглым значком. */
 .eyebrow {
-  position: relative; margin: 0; display: inline-flex; align-items: center; align-self: flex-start;
+  margin: 0; display: inline-flex; align-items: center; gap: 10px; align-self: flex-start;
   font-size: .8125rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2);
 }
-/* точка висит на поле, по центру линии нити (thread.ts берёт её left из стиля) */
 .eyebrow::before {
-  content: ""; position: absolute; left: -12px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%;
+  content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%;
   background: var(--amber); box-shadow: 0 0 0 4px var(--amber-glow);
 }
-@media (min-width: 720px) { .eyebrow::before { left: -22px; } }
 .sec { padding-block: 88px 72px; display: flex; flex-direction: column; gap: 18px; }
 .sec-title {
   margin: 0; font-family: var(--font-display); font-weight: 560; font-optical-sizing: auto;

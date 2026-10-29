@@ -24,7 +24,7 @@ const data = Object.fromEntries(list.map(v => [v.key, Object.fromEntries(Object.
   [p, { src: `${import.meta.env.BASE_URL}${S[k].file}`, env: env(S[k].env) }]))]));
 ---
 <section class="wrap sec tuner-section" id="voices" aria-labelledby="voices-title">
-  <p class="eyebrow" data-thread="pin">Голоса</p>
+  <p class="eyebrow">Голоса</p>
   <h2 class="sec-title" id="voices-title">Подберите <em>свой</em> голос</h2>
   <p class="intro">{intro}</p>
   <div class="controls">
@@ -42,7 +42,6 @@ const data = Object.fromEntries(list.map(v => [v.key, Object.fromEntries(Object.
     </fieldset>
   </div>
   <div class="tuner">
-    <div class="needle" aria-hidden="true" data-thread="needle" data-thread-side="left"></div>
     <ul class="voice-list">
       {list.map(v => <VoiceCard v={v} packTitle={title(v.pack)} />)}
     </ul>
@@ -69,10 +68,6 @@ const data = Object.fromEntries(list.map(v => [v.key, Object.fromEntries(Object.
   .chip input:focus-visible + span { outline: 3px solid var(--ink); outline-offset: 3px; box-shadow: 0 0 0 6px var(--amber-glow); }
   .seg .chip input:checked + span { background: var(--indigo); color: var(--on-indigo); border-color: var(--indigo); }
   .tuner { position: relative; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); }
-  .needle {
-    position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-1px);
-    pointer-events: none;
-  }
   .voice-list {
     list-style: none; margin: 0; display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
     padding: 24px calc(50% - min(130px, 37vw)); scrollbar-width: thin; position: relative; z-index: 2;

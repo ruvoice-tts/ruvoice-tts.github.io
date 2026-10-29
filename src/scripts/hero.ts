@@ -1,5 +1,5 @@
 // Первый экран: «Послушать» читает заголовок и абзац голосом Айдара, слова подсвечиваются,
-// нить в плеере качается по огибающей громкости.
+// линия в плеере качается по огибающей громкости.
 import { envAt, player, wordAt } from './player';
 
 interface HeroData { src: string; duration: number; hop: number; env: number[]; words: [number, number][] }
@@ -21,7 +21,7 @@ export function initHero(): void {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   let ww = 0, wh = 48, cur = -1, amp = 0, phase = 0;
 
-  /** В покое — прямая, продолжение нити; во время чтения — волна, сходящая на нет к краям. */
+  /** В покое — прямая; во время чтения — волна, сходящая на нет к краям. */
   const draw = (a: number, prog: number) => {
     const n = Math.max(24, Math.round(ww / 6)), mid = wh / 2;
     let d = '';

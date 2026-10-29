@@ -16,7 +16,7 @@ const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).p
       <span class="listen-meta" id="listen-meta">Голос Айдар прочитает этот экран, {n}&nbsp;{pluralRu(n, 'секунду', 'секунды', 'секунд')}</span>
     </span>
   </button>
-  <div class="wave" aria-hidden="true" data-thread="wave" data-thread-side="left">
+  <div class="wave" aria-hidden="true">
     <svg id="wave"><path d="M0 24" /><circle r="5" cx="0" cy="24" /></svg>
   </div>
   <span class="listen-time" id="listen-time" aria-hidden="true">0:00 / {fmt(Math.round(Astro.props.duration))}</span>

@@ -20,3 +20,9 @@ test('ссылки скачивания из данных сборки', () => {
   else expect(h.querySelector('#dl-pack')).toBeNull();
   expect(h.querySelector('#dl-rustore')!.getAttribute('href')).toBe('https://www.rustore.ru/catalog/app/ru.kost.ruvoice');
 });
+
+test('на главной нет нити: ни линии, ни её опор', () => {
+  const h = page('/');
+  expect(h.querySelector('#thread')).toBeNull();
+  expect(h.querySelectorAll('[data-thread]').length).toBe(0);
+});

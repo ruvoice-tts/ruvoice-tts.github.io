@@ -19,10 +19,3 @@ test('звук не загрузился — кнопка в покое с по�
   await expect(page.locator('#listen-label')).toHaveText('Звук не включился, нажмите ещё раз');
   await expect(page.locator('#play-btn')).toHaveAttribute('aria-pressed', 'false');
 });
-
-test('при «уменьшить движение» нить нарисована сразу', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
-  const off = await page.locator('#thread-a').evaluate(el => getComputedStyle(el).strokeDashoffset);
-  expect(off).toBe('0px');
-});

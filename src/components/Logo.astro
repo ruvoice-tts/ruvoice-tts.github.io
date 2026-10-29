@@ -1,10 +1,10 @@
 ---
 // Иконка приложения (белая «Р» и две янтарные дуги на индиго). uid — чтобы id градиента не повторялся на странице.
-interface Props { uid: string; class?: string; thread?: boolean }
-const { uid, class: cls, thread } = Astro.props;
+interface Props { uid: string; class?: string }
+const { uid, class: cls } = Astro.props;
 const g = `logo-g-${uid}`;
 ---
-<svg class={cls} viewBox="18 18 72 72" aria-hidden="true" focusable="false" data-thread={thread ? 'start' : undefined}>
+<svg class={cls} viewBox="18 18 72 72" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id={g} x1="18" y1="18" x2="90" y2="90" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#3F51B5" /><stop offset="1" stop-color="#1A237E" />
