@@ -14,6 +14,6 @@
   .thread :global(.line) { stroke-width: 3; }
   /* свечение вторым путём, а не CSS-фильтром: фильтр на высоком SVG тормозит слабые телефоны */
   .thread :global(.glow) { stroke-width: 9; opacity: .2; }
-  .thread:global(.is-drawing) :global(path) { transition: stroke-dashoffset 1.25s cubic-bezier(.65, 0, .35, 1); }
+  .thread:global(.is-static) :global(path) { transition: none !important; }
   @media (prefers-reduced-motion: reduce) { .thread :global(path) { transition: none !important; } }
 </style>

@@ -82,6 +82,9 @@ export function initThread(): void {
   }
 
   function layout(): void {
+    // Пересчёт без анимации: иначе браузер успевает запомнить нить целиком нарисованной (getTotalLength
+    // пересчитывает стиль раньше, чем выставлен штрих) и потом «откатывает» её назад.
+    svg.classList.add('is-static');
     const W = page.clientWidth, H = page.scrollHeight;
     svg.setAttribute('width', String(W));
     svg.setAttribute('height', String(H));
@@ -104,16 +107,22 @@ export function initThread(): void {
       for (const p of [l.glow, l.line]) p.style.strokeDasharray = reduce.matches ? 'none' : String(l.len);
     });
     reveal();
+    for (const l of lines) void getComputedStyle(l.line).strokeDashoffset; // зафиксировать без анимации
+    svg.classList.remove('is-static');
   }
 
-  /** Видимая часть нити — до 85 % высоты окна; при уменьшении движения — вся. */
-  function reveal(): void {
+  /** Сколько нити видно: до 85 % высоты окна; до первого показа — нисколько; при уменьшении движения — вся. */
+  function visible(l: (typeof lines)[number]): number {
+    if (reduce.matches) return l.len;
+    if (!ready) return 0;
     const limit = scrollY + innerHeight * 0.85 - (page.getBoundingClientRect().top + scrollY);
+    for (const [s, y] of l.ys) if (y > limit) return s;
+    return l.len;
+  }
+
+  function reveal(): void {
     for (const l of lines) {
-      let vis = 0;
-      if (reduce.matches) vis = l.len;
-      else if (ready) { vis = l.len; for (const [s, y] of l.ys) if (y > limit) { vis = s; break; } }
-      const off = String(Math.max(0, l.len - vis));
+      const off = String(Math.max(0, l.len - visible(l)));
       l.glow.style.strokeDashoffset = off;
       l.line.style.strokeDashoffset = off;
     }
@@ -135,9 +144,19 @@ export function initThread(): void {
       requestAnimationFrame(() => { queued = false; reveal(); });
     }, { passive: true });
     if (reduce.matches) return;
-    svg.classList.add('is-drawing');
-    requestAnimationFrame(() => { ready = true; reveal(); });
-    setTimeout(() => svg.classList.remove('is-drawing'), 1400);
+    // Первый показ: нить выходит из значка и тянется вниз — отрезки по очереди, с одной скоростью.
+    requestAnimationFrame(() => {
+      ready = true;
+      const vis = lines.map(visible), total = vis.reduce((a, b) => a + b, 0) || 1, D = 1.8;
+      let before = 0;
+      lines.forEach((l, i) => {
+        const t = `stroke-dashoffset ${(D * vis[i] / total).toFixed(2)}s cubic-bezier(.45, 0, .55, 1) ${(D * before / total).toFixed(2)}s`;
+        before += vis[i];
+        for (const p of [l.glow, l.line]) p.style.transition = t;
+      });
+      reveal();
+      setTimeout(() => { for (const l of lines) for (const p of [l.glow, l.line]) p.style.transition = ''; }, D * 1000 + 100);
+    });
   };
   const idle = (f: () => void) => ('requestIdleCallback' in window ? requestIdleCallback(f, { timeout: 1200 }) : setTimeout(f, 200));
   if (document.readyState === 'complete') idle(start);
