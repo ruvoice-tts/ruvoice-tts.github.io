@@ -3,7 +3,7 @@ import packMeta from '../data/packs.json';
 import { loadReleaseData, type AppRelease, type Asset, type PackAsset, type ReleaseData } from './github';
 
 export interface PackMeta {
-  id: string; title: string; lang: 'ru' | 'be' | 'uk'; voices: number; minVersion: string;
+  id: string; title: string; lang?: 'ru' | 'be' | 'uk'; voices: number; minVersion: string;
   license: string; note: string; credits?: string; order: number;
 }
 export interface VisiblePack extends PackMeta, PackAsset {}
@@ -13,7 +13,7 @@ export function visiblePacks(meta: PackMeta[], released: Record<string, PackAsse
   return Object.values(released)
     .map(asset => {
       const m = meta.find(p => p.id === asset.id) ??
-        { id: asset.id, title: asset.id, lang: 'ru' as const, voices: 0, minVersion: '', license: '', note: '', order: 999 };
+        { id: asset.id, title: asset.id, voices: 0, minVersion: '', license: '', note: '', order: 999 }; // язык не знаем — не пишем
       return { ...m, ...asset };
     })
     .sort((a, b) => a.order - b.order);

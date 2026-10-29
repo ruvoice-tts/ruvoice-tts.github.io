@@ -5,11 +5,12 @@ export type Lang = 'ru' | 'be' | 'uk';
 export interface Answers { source: 'rustore' | 'file'; langs: Lang[]; smallUpdates: boolean }
 export interface Recommendation { build: 'full' | 'lite' | 'rustore'; packs: string[]; note: string }
 
-export function recommend(a: Answers, packs: { id: string; lang: Lang; size: number }[],
+export function recommend(a: Answers, packs: { id: string; lang?: Lang; size: number }[],
   sizes: { full: number; lite?: number }): Recommendation {
   // паки языков, кроме русского, которые выложены; язык без пака просто не учитывается
   const other = a.langs.filter(l => l !== 'ru' && packs.some(p => p.lang === l));
-  const extra = packs.filter(p => other.includes(p.lang)).map(p => p.id);
+  // один пак на язык — первый по порядку, основной; расширенный (как cis_uk_ext) есть на странице паков
+  const extra = other.map(l => packs.find(p => p.lang === l)!.id);
   if (a.source === 'rustore') {
     return { build: 'rustore', packs: extra, note: 'Обновления приходят сами, обычно на неделю позже, чем на GitHub. Паки голосов ставятся файлом.' };
   }

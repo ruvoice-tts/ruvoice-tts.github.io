@@ -5,7 +5,7 @@ import { recommend, type Lang } from '../lib/wizard';
 interface Item { url: string; size: number }
 interface WizardData {
   version: string; full: Item; lite?: Item; rustore: string;
-  packs: Array<Item & { id: string; lang: Lang; title: string }>;
+  packs: Array<Item & { id: string; lang?: Lang; title: string }>;
 }
 
 export function initWizard(): void {

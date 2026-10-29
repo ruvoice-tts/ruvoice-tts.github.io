@@ -24,3 +24,8 @@ test('без lite в релизе скачать можно только пол�
   expect(downloadOptions(app).map(o => o.id)).toEqual(['full']);
   expect(downloadOptions(d.app).map(o => o.id)).toEqual(['full', 'lite']);
 });
+
+test('у неописанного пака язык не выдумывается', () => {
+  const v = visiblePacks([], { xx: { id: 'xx', url: 'https://example.org/xx.zip', size: 1, updated: '' } });
+  expect(v[0].lang).toBeUndefined();
+});

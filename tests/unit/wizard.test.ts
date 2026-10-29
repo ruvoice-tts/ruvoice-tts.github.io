@@ -42,3 +42,8 @@ test('ничего не выбрано — полная', () => {
 test('язык, пака которого нет, не ломает подбор', () => {
   expect(recommend({ source: 'file', langs: ['uk'], smallUpdates: false }, packs, sizes)).toMatchObject({ build: 'full', packs: [] });
 });
+
+test('у языка два пака — советуется один, первый по порядку', () => {
+  const two = [...packs, { id: 'cis_uk', lang: 'uk' as Lang, size: 1 }, { id: 'cis_uk_ext', lang: 'uk' as Lang, size: 2 }];
+  expect(recommend({ source: 'file', langs: ['uk'], smallUpdates: false }, two, sizes)).toMatchObject({ build: 'lite', packs: ['cis_uk'] });
+});
