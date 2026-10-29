@@ -12,6 +12,7 @@ export function initTuner(): void {
   if (!root || !dataEl) return;
   const data: TunerData = JSON.parse(dataEl.textContent!);
   const cards = [...root.querySelectorAll<HTMLElement>('li.voice')];
+  const list = root.querySelector<HTMLElement>('.voice-list')!;
   const seqBtn = root.querySelector<HTMLButtonElement>('#tuner-all')!;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   let seq = false;
@@ -87,7 +88,8 @@ export function initTuner(): void {
     const next = () => {
       if (!seq || i >= queue.length) { stopSeq(); return; }
       const c = queue[i++];
-      c.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduce.matches ? 'auto' : 'smooth' });
+      // крутим только саму ленту: scrollIntoView тянул бы к ней всю страницу, даже если человек ушёл ниже
+      list.scrollTo({ left: c.offsetLeft - (list.clientWidth - c.offsetWidth) / 2, behavior: reduce.matches ? 'auto' : 'smooth' });
       play(c, next);
     };
     next();
