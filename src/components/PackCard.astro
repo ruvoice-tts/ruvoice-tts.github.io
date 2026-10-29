@@ -18,11 +18,6 @@ const Tag = compact ? 'h3' : 'h2';
 ---
 <section class:list={['pack', { compact }]} id={compact ? undefined : `pack-${p.id}`} aria-labelledby={`${compact ? 'tease' : 'pack'}-${p.id}-title`}>
   <Tag id={`${compact ? 'tease' : 'pack'}-${p.id}-title`}>{p.title}</Tag>
-  <p class="facts">{[n > 0 && `${n}\u00a0${pluralRu(n, 'голос', 'голоса', 'голосов')}`, lang, size].filter(Boolean).join(' · ')}</p>
-  {!compact && p.minVersion && <p class="meta">Нужна версия {p.minVersion} или новее</p>}
-  {p.note && <p class="note">{p.note}</p>}
-  {!compact && p.license && <p class="meta">Лицензия: {p.license}</p>}
-  {!compact && p.credits && <p class="meta">Авторство записей: {p.credits}</p>}
   <div class="actions">
     <a class="pack-dl" href={p.url} id={`${compact ? 'tease' : 'pack'}-${p.id}-dl`}>Скачать пак<span class="vh"> «{p.title}», ZIP,</span> <span class="sz">{size}</span></a>
     {list[0] && (
@@ -31,6 +26,11 @@ const Tag = compact ? 'h3' : 'h2';
       </button>
     )}
   </div>
+  <p class="facts">{[n > 0 && `${n}\u00a0${pluralRu(n, 'голос', 'голоса', 'голосов')}`, lang, size].filter(Boolean).join(' · ')}</p>
+  {!compact && p.minVersion && <p class="meta">Нужна версия {p.minVersion} или новее</p>}
+  {p.note && <p class="note">{p.note}</p>}
+  {!compact && p.license && <p class="meta">Лицензия: {p.license}</p>}
+  {!compact && p.credits && <p class="meta">Авторство записей: {p.credits}</p>}
   {!compact && list.length > 1 && (
     <details class="all">
       <summary>Все голоса пака ({list.length})</summary>
@@ -60,15 +60,16 @@ const Tag = compact ? 'h3' : 'h2';
   .facts { margin: 0; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
   .note, .meta { margin: 0; color: var(--ink-2); }
   .meta { font-size: .9375rem; }
-  /* кнопки прижаты к низу: в ряду карточек они стоят на одной линии, сколько бы ни было текста выше */
-  .actions { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-top: auto; padding-top: 12px; }
+  /* В разметке кнопки сразу после названия: чтецу «Скачать» — следующий свайп после заголовка, без описания и лицензии.
+     На экране они прижаты к низу: в ряду карточек стоят на одной линии, сколько бы ни было текста выше. */
+  .actions { order: 1; display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-top: auto; padding-top: 12px; }
   .pack-dl {
     display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; min-height: 52px; padding: 6px 10px 6px 22px; border-radius: 28px;
     background: var(--indigo); color: var(--on-indigo); font-weight: 650; text-decoration: none;
   }
   .pack-dl:hover { background: var(--indigo-2); }
   .sz { padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, .16); font-variant-numeric: tabular-nums; }
-  .all { margin-top: 8px; }
+  .all { order: 2; margin-top: 8px; }
   .all summary { cursor: pointer; min-height: 44px; display: inline-flex; align-items: center; font-weight: 600; }
   .all ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 4px; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }
   .all li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 48px; min-width: 0; padding: 2px 4px 2px 12px; border-radius: 14px; background: var(--bg-2); }

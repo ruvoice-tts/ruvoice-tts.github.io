@@ -37,3 +37,12 @@ test('в строке фактов число отделено от слова �
     if (/^\d/.test(f.text)) expect(f.text).toMatch(/^\d+\s(голос|голоса|голосов) · /);
   }
 });
+
+test('в карточке пака чтецу сначала «Скачать»: ссылка сразу после названия', () => {
+  for (const path of ['/', '/packs/'])
+    for (const card of page(path).querySelectorAll('.pack')) {
+      const next = card.querySelector('h2, h3')!.nextElementSibling!;
+      expect(next.classList.contains('actions'), path).toBe(true);
+      expect(next.querySelector('a')!.classList.contains('pack-dl'), path).toBe(true);
+    }
+});

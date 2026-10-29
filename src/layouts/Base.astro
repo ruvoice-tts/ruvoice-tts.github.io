@@ -45,7 +45,7 @@ const { release } = await getSite();
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
-    <SkipLinks full={release.app.full} version={release.app.version} home={home} />
+    <SkipLinks full={release.app.full} version={release.app.version} path={path} />
     <div class="page" id="page">
       <Header home={home} />
       <slot />

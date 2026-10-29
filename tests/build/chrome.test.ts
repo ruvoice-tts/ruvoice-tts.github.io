@@ -25,3 +25,13 @@ test('нигде нет ссылок на Апптеку и 4pda и упомин
     expect(rawFile(f), f).not.toMatch(/апптек|appteka/i);
   }
 });
+
+test('третья ссылка ведёт чтеца прямо к пакам: на главной к разделу, на странице паков к списку', () => {
+  const skip = (path: string) => page(path).querySelectorAll('body a[href], body button')[2];
+  expect(norm(skip('/').text)).toBe('Скачать паки голосов');
+  expect(skip('/').getAttribute('href')).toBe('#packs');
+  expect(page('/').querySelector('#packs a.pack-dl')).not.toBeNull();
+  expect(skip('/packs/').getAttribute('href')).toBe('#pack-list');
+  expect(page('/packs/').querySelector('#pack-list a.pack-dl')).not.toBeNull();
+  expect(skip('/changelog/').getAttribute('href')).toBe('/packs/');
+});

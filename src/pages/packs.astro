@@ -9,7 +9,7 @@ const { packs } = await getSite();
   <main class="wrap sec packs-page">
     <h1 class="sec-title">Паки голосов</h1>
     <p class="intro">Пак — это zip-файл с голосами. Распаковывать не нужно: в приложении меню ⋮ → «Дополнительные голоса…» → «Установить из файла…», выберите файл. Голоса появятся на вкладке «Голос» и в списке голосов читалки.</p>
-    <div class="list">{packs.map(p => <PackCard p={p} />)}</div>
+    <div class="list" id="pack-list">{packs.map(p => <PackCard p={p} />)}</div>
   </main>
 </Base>
 

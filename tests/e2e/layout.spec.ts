@@ -40,3 +40,14 @@ test('страница не ходит на чужие адреса', async ({ p
   await page.waitForLoadState('networkidle');
   expect([...hosts]).toEqual(['localhost']);
 });
+
+// В разметке «Скачать» сразу после названия пака (чтецу — второй свайп), а на экране кнопки внизу карточки.
+for (const path of ['/', '/packs/']) {
+  test(`кнопки пака внизу карточки, ${path}`, async ({ page }) => {
+    await page.goto(path);
+    for (const card of await page.locator('.pack').all()) {
+      const [facts, actions] = await Promise.all([card.locator('.facts').boundingBox(), card.locator('.actions').boundingBox()]);
+      expect(actions!.y).toBeGreaterThan(facts!.y + facts!.height);
+    }
+  });
+}

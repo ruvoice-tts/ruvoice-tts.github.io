@@ -1,14 +1,18 @@
 ---
-// Первые два фокусируемых элемента страницы: чтецу до скачивания полной сборки — свайп и двойное касание.
+// Первые три фокусируемых элемента страницы: чтецу до скачивания полной сборки — свайп и двойное касание,
+// до паков голосов — три свайпа, без пролистывания всей страницы.
 import type { Asset } from '../lib/github';
 import { formatMB } from '../lib/format';
 
-interface Props { full: Asset; version: string; home: boolean }
-const { full, version, home } = Astro.props;
+interface Props { full: Asset; version: string; path: string }
+const { full, version, path } = Astro.props;
+const home = path === '/';
+const packs = home ? '#packs' : path === '/packs/' ? '#pack-list' : '/packs/';
 ---
 <div class="skips">
   <a class="skip" id="skip-full" href={full.url}>Скачать полную сборку {version}, APK, {formatMB(full.size)}</a>
   <a class="skip" id="skip-card" href={home ? '#download' : '/#download'}>Другие варианты скачивания</a>
+  <a class="skip" id="skip-packs" href={packs}>Скачать паки голосов</a>
 </div>
 
 <style>
