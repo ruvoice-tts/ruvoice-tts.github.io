@@ -1,0 +1,46 @@
+---
+import faq from '../data/faq.json';
+
+type Part = string | { href: string; text: string };
+---
+<section class="wrap sec" id="faq" aria-labelledby="faq-title">
+  <p class="eyebrow" data-thread="pin">Вопросы</p>
+  <h2 class="sec-title" id="faq-title">Вопросы и ответы</h2>
+  <div class="list">
+    {faq.map((it, i) => (
+      <div class="item">
+        <h3>
+          <button type="button" id={`faq-q-${i}`} aria-expanded="true" aria-controls={`faq-a-${i}`}>
+            <span>{it.q}</span><span class="pm" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="answer" id={`faq-a-${i}`}>
+          <p>{(it.a as Part[]).map(part => (typeof part === 'string' ? part : <a href={part.href}>{part.text}</a>))}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  import { initFaq } from '../scripts/faq';
+  initFaq();
+</script>
+
+<style>
+  .list { display: grid; margin-top: 8px; border-top: 1px solid var(--line); }
+  .item { border-bottom: 1px solid var(--line); }
+  h3 { margin: 0; }
+  h3 button {
+    width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; text-align: left;
+    min-height: 64px; padding: 14px 4px; background: none; border: 0; color: var(--ink); cursor: pointer;
+    font: inherit; font-size: 1.25rem; font-weight: 600; line-height: 1.3;
+  }
+  .pm { position: relative; width: 22px; height: 22px; flex: none; }
+  .pm::before, .pm::after { content: ""; position: absolute; left: 0; right: 0; top: 10px; height: 2px; border-radius: 2px; background: var(--amber); transition: transform .2s; }
+  .pm::after { transform: rotate(90deg); }
+  button[aria-expanded="true"] .pm::after { transform: rotate(0deg); }
+  .answer p { margin: 0 0 20px; max-width: 46em; color: var(--ink-2); font-size: 1.0625rem; }
+  .answer a { color: var(--ink); font-weight: 600; text-decoration-color: var(--amber); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { .pm::before, .pm::after { transition: none; } }
+</style>

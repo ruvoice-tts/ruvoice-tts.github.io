@@ -1,0 +1,84 @@
+---
+import samples from '../data/samples.json';
+import voices from '../data/voices.json';
+import { formatMB, pluralRu } from '../lib/format';
+import type { VisiblePack } from '../lib/site';
+
+interface Props { p: VisiblePack; compact?: boolean }
+const { p, compact } = Astro.props;
+const S = samples as Record<string, { file: string }>;
+const base = import.meta.env.BASE_URL;
+const list = voices.filter(v => v.pack === p.id);
+const n = list.length || p.voices;
+const lang = { ru: 'русский', be: 'белорусский', uk: 'украинский' }[p.lang];
+const size = formatMB(p.size);
+const label = `Скачать пак «${p.title}», ZIP, ${size}`;
+const src = (key: string) => `${base}${S[key].file}`;
+const play = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg>';
+const Tag = compact ? 'h3' : 'h2';
+---
+<section class:list={['pack', { compact }]} id={compact ? undefined : `pack-${p.id}`} aria-labelledby={`${compact ? 'tease' : 'pack'}-${p.id}-title`}>
+  <Tag id={`${compact ? 'tease' : 'pack'}-${p.id}-title`}>{p.title}</Tag>
+  <p class="facts">{n > 0 && <>{n} {pluralRu(n, 'голос', 'голоса', 'голосов')} · </>}{lang} · {size}</p>
+  {!compact && p.minVersion && <p class="meta">Нужна версия {p.minVersion} или новее</p>}
+  {p.note && <p class="note">{p.note}</p>}
+  {!compact && p.license && <p class="meta">Лицензия: {p.license}</p>}
+  {!compact && p.credits && <p class="meta">Авторство записей: {p.credits}</p>}
+  <div class="actions">
+    <a class="pack-dl" href={p.url} aria-label={label} id={`${compact ? 'tease' : 'pack'}-${p.id}-dl`}>Скачать пак <span class="sz">{size}</span></a>
+    {list[0] && (
+      <button type="button" class="play-pill" data-play={src(list[0].samples.book)} aria-pressed="false">
+        <span class="i" aria-hidden="true" set:html={play} />Послушать<span class="vh">: {list[0].name ?? list[0].id}</span>
+      </button>
+    )}
+  </div>
+  {!compact && list.length > 1 && (
+    <details class="all">
+      <summary>Все голоса пака ({list.length})</summary>
+      <ul>
+        {list.map(v => (
+          <li>
+            <span class="vname">{v.name ?? v.id}</span>{v.name && <span class="vid">{v.id}</span>}
+            <button type="button" class="mini" data-play={src(v.samples.book)} aria-pressed="false">
+              <span class="vh">Послушать: {v.name ?? v.id}</span><span aria-hidden="true" set:html={play} />
+            </button>
+          </li>
+        ))}
+      </ul>
+    </details>
+  )}
+</section>
+
+<style>
+  .pack {
+    display: flex; flex-direction: column; gap: 10px; padding: 28px; border-radius: 28px;
+    background: var(--card); border: 1px solid var(--line); box-shadow: inset 0 1px 0 var(--hi), 0 24px 48px -32px var(--shadow);
+    min-width: 0;
+  }
+  h2, h3 { margin: 0; font-family: var(--font-display); font-weight: 560; letter-spacing: -.015em; line-height: 1.12; }
+  h2 { font-size: clamp(1.7rem, 1.3rem + 1.2vw, 2.3rem); }
+  h3 { font-size: 1.5rem; }
+  .facts { margin: 0; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .note, .meta { margin: 0; color: var(--ink-2); }
+  .meta { font-size: .9375rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-top: 8px; }
+  .pack-dl {
+    display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 10px 0 22px; border-radius: 999px;
+    background: var(--indigo); color: var(--on-indigo); font-weight: 650; text-decoration: none;
+  }
+  .pack-dl:hover { background: var(--indigo-2); }
+  .sz { padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, .16); font-variant-numeric: tabular-nums; }
+  .all { margin-top: 8px; }
+  .all summary { cursor: pointer; min-height: 44px; display: inline-flex; align-items: center; font-weight: 600; }
+  .all ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 4px; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }
+  .all li { display: flex; align-items: center; gap: 8px; min-height: 48px; padding-inline: 12px 4px; border-radius: 14px; background: var(--bg-2); }
+  .vname { font-weight: 600; }
+  .vid { color: var(--ink-3); font-size: .875rem; }
+  .mini {
+    margin-left: auto; width: 44px; height: 44px; flex: none; border-radius: 50%; border: 0; cursor: pointer;
+    display: grid; place-items: center; background: var(--indigo); color: var(--on-indigo);
+  }
+  .mini :global(svg) { width: 16px; height: 16px; }
+  .mini[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--amber-glow), 0 0 0 1px var(--amber); }
+  .compact { padding: 22px; }
+</style>
