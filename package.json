@@ -7,7 +7,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "test": "vitest run",
-    "snapshot": "node tools/snapshot.mjs"
+    "snapshot": "node tools/snapshot.mjs",
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@fontsource-variable/golos-text": "5.3.0",
@@ -15,6 +16,8 @@
     "astro": "6.4.8"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
     "node-html-parser": "9.0.5",
     "vitest": "5.0.5"
   }

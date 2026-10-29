@@ -24,7 +24,6 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
       - run: npm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

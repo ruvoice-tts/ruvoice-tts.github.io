@@ -1,0 +1,23 @@
+---
+// Первые два фокусируемых элемента страницы: чтецу до скачивания полной сборки — свайп и двойное касание.
+import type { Asset } from '../lib/github';
+import { formatMB } from '../lib/format';
+
+interface Props { full: Asset; version: string; home: boolean }
+const { full, version, home } = Astro.props;
+---
+<div class="skips">
+  <a class="skip" id="skip-full" href={full.url}>Скачать полную сборку {version}, APK, {formatMB(full.size)}</a>
+  <a class="skip" id="skip-card" href={home ? '#download' : '/#download'}>Другие варианты скачивания</a>
+</div>
+
+<style>
+  .skip {
+    position: fixed; z-index: 50;
+    left: max(16px, env(safe-area-inset-left, 0px)); top: calc(env(safe-area-inset-top, 0px) + 12px);
+    transform: translateY(-200%);
+    background: var(--indigo); color: var(--on-indigo); font-weight: 650; text-decoration: none;
+    padding: 14px 22px; border-radius: 999px; max-width: calc(100vw - 32px);
+  }
+  .skip:focus-visible { transform: none; }
+</style>

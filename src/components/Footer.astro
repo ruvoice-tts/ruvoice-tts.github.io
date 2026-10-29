@@ -1,0 +1,40 @@
+---
+import Logo from './Logo.astro';
+---
+<footer class="site-footer">
+  <div class="wrap foot">
+    <div class="brand">
+      <a class="logo" href="/" id="footer-logo"><Logo uid="foot" class="logo-mark" /><span>RuVoice</span></a>
+      <p>Бесплатный офлайн-голос для Android</p>
+    </div>
+    <nav class="links" aria-label="Ссылки">
+      <ul>
+        <li><a id="foot-tg" href="https://t.me/ruVoiceTTS">Группа в Telegram</a></li>
+        <li><a id="foot-gh" href="https://github.com/kost-t-human/ruvoice-tts">GitHub</a></li>
+        <li><a id="foot-rs" href="https://www.rustore.ru/catalog/app/ru.kost.ruvoice">RuStore</a></li>
+      </ul>
+      <ul>
+        <li><a id="foot-packs" href="/packs/">Паки голосов</a></li>
+        <li><a id="foot-changes" href="/changelog/">Что нового</a></li>
+        <li><a id="foot-sr" href="/screen-reader/">С экранным чтецом</a></li>
+      </ul>
+    </nav>
+    <p class="licenses">Голоса: Silero Models, CC BY-NC-SA 4.0 · Ударения: Silero Stress, MIT · Темп: Sonic, Apache 2.0 · Морфология: AOT, LGPL</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { position: relative; z-index: 2; background: var(--bg-2); border-top: 1px solid var(--line); }
+  .foot { display: grid; gap: 28px 48px; padding-block: 48px 40px; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 820px) { .foot { grid-template-columns: minmax(0, 1fr) auto; } }
+  .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 650; font-size: 1.25rem; min-height: 48px; }
+  .logo :global(.logo-mark) { width: 34px; height: 34px; }
+  .brand p { margin: 6px 0 0; color: var(--ink-2); }
+  .links { display: flex; flex-wrap: wrap; gap: 8px 48px; }
+  .links ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .links a {
+    display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); font-weight: 500;
+    text-decoration-color: var(--amber); text-decoration-thickness: 2px; text-underline-offset: 4px;
+  }
+  .licenses { grid-column: 1 / -1; margin: 0; font-size: .875rem; color: var(--ink-3); }
+</style>
