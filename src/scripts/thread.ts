@@ -68,9 +68,18 @@ export function initThread(): void {
           break;
         }
         case 'wave': {
-          const cy = b.y + b.h / 2;
-          go([b.x + 2, cy], side, 56); // заход в плеер прячется за его левой частью
-          segs.push([[b.x + b.w - 2, cy]]);
+          // Плеер — часть нити: она входит в его левый край и выходит из правого горизонтально,
+          // на высоте волны внутри. Спуск по полю переходит в горизонталь дугой радиуса r у самого края.
+          const cy = b.y + b.h / 2, bar = box(el.closest('.listen') ?? el), r = 28;
+          if (side === 'left') {
+            go([gutter, cy - r], side, 60);
+            segs[segs.length - 1].push([gutter + r * .293, cy - r * .293], [gutter + r, cy], [b.x + 2, cy]);
+          } else {
+            go([b.x + 2, cy], side, 56);
+          }
+          const exit: P[] = [[b.x + b.w - 2, cy], [bar.x + bar.w + 2, cy]];
+          if (W - gutter - (bar.x + bar.w) > 80) exit.push([bar.x + bar.w + 44, cy]); // прямой отрезок, если есть место
+          segs.push(exit);
           break;
         }
         case 'pin': {

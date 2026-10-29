@@ -39,3 +39,29 @@ for (const width of [1424, 1440, 1280, 1100]) {
     expect(maxX).toBeGreaterThan(cardRight);
   });
 }
+
+// Плеер — часть нити: она входит в левый край и выходит из правого горизонтально, на высоте его волны.
+test('нить входит в плеер и выходит из него ровно, как продолжение его линии', async ({ page }) => {
+  await page.setViewportSize({ width: 1424, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await page.waitForFunction(() => document.querySelectorAll('#thread path.line').length > 1);
+  const r = await page.evaluate(() => {
+    const pg = document.getElementById('page')!.getBoundingClientRect();
+    const bar = document.getElementById('listen')!.getBoundingClientRect();
+    const wave = document.querySelector('.wave')!.getBoundingClientRect();
+    const cy = wave.top + wave.height / 2 - pg.top, left = bar.left - pg.left, right = bar.right - pg.left;
+    const [a, b] = document.querySelectorAll<SVGPathElement>('#thread path.line');
+    const yAt = (l: SVGPathElement, x: number) => {
+      let best = { d: 1e9, y: 0 };
+      for (let s = 0; s <= l.getTotalLength(); s += 1) {
+        const p = l.getPointAtLength(s);
+        if (Math.abs(p.y - cy) < 80 && Math.abs(p.x - x) < best.d) best = { d: Math.abs(p.x - x), y: p.y };
+      }
+      return best.y - cy;
+    };
+    return { entry: yAt(a, left), exit: yAt(b, right + 24) };
+  });
+  expect(Math.abs(r.entry)).toBeLessThanOrEqual(3);
+  expect(Math.abs(r.exit)).toBeLessThanOrEqual(2);
+});
