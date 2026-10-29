@@ -1,7 +1,7 @@
 <div class="aurora" aria-hidden="true"></div>
 
 <style>
-  /* одно мягкое свечение за заголовком — единственное цветовое пятно страницы */
+  /* одно мягкое свечение за заголовком — единственное цветовое пятно страницы; неподвижное */
   .aurora {
     position: absolute; z-index: 1; pointer-events: none;
     left: -14%; top: 20px; width: min(1180px, 100vw); height: min(940px, 125vh);
@@ -10,8 +10,5 @@
       radial-gradient(closest-side, var(--peach), transparent) 64% 46% / 46% 52% no-repeat,
       radial-gradient(closest-side, color-mix(in srgb, var(--amber) 30%, transparent), transparent) 38% 78% / 34% 40% no-repeat;
     filter: blur(36px); opacity: .95;
-    animation: drift 36s ease-in-out infinite alternate;
   }
-  @keyframes drift { to { transform: translate3d(5%, 3%, 0) scale(1.08) rotate(2deg); } }
-  @media (prefers-reduced-motion: reduce) { .aurora { animation: none; } }
 </style>
