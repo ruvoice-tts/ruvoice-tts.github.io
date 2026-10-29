@@ -40,13 +40,17 @@ export function initThread(): void {
   };
 
   function points(W: number): P[][] {
-    const gutter = Math.max(8, (W - 1280) / 2 + 22);
+    // поле — линия, на которой висят точки надзаголовков: левый край колонки минус отступ точки
+    const wrap = document.querySelector('main .wrap');
+    const left0 = wrap ? box(wrap).x + parseFloat(getComputedStyle(wrap).paddingLeft) : 16;
+    const gutter = Math.max(6, left0 - (W >= 720 ? 18 : 8));
     const segs: P[][] = [[]];
     const last = () => segs[segs.length - 1].at(-1);
-    const go = (to: P, side: string | undefined, approach = 80) => {
+    // к цели — по полю; повороты широкие (уход на 120 px, подход на approach), чтобы изгибы были плавными
+    const go = (to: P, side: string | undefined, approach = 120) => {
       const from = last();
       const x = side === 'left' ? gutter : W - gutter;
-      if (from && to[1] - from[1] > approach + 140) segs[segs.length - 1].push([x, from[1] + 64], [x, to[1] - approach]);
+      if (from && to[1] - from[1] > approach + 200) segs[segs.length - 1].push([x, from[1] + 120], [x, to[1] - approach]);
       segs[segs.length - 1].push(to);
     };
     let prev = '';
@@ -58,21 +62,23 @@ export function initThread(): void {
       switch (el.dataset.thread) {
         case 'start': {
           const s: P = [b.x + (70.7 - 18) / 72 * b.w, b.y + (58.3 - 18) / 72 * b.h];
-          segs[segs.length - 1].push(s, [s[0] + 2, s[1] + 26]);
+          segs[segs.length - 1].push(s, [s[0] - 6, s[1] + 70]);
           break;
         }
         case 'wave': {
           const cy = b.y + b.h / 2;
-          go([b.x + 2, cy], side, 36);
+          go([b.x + 2, cy], side, 56); // заход в плеер прячется за его левой частью
           segs.push([[b.x + b.w - 2, cy]]);
           break;
         }
-        case 'pin':
-          go([b.x + 4, b.y + b.h / 2], side);
+        case 'pin': {
+          const dot = parseFloat(getComputedStyle(el, '::before').left) || 0;
+          go([b.x + dot + 4, b.y + b.h / 2], side);
           break;
+        }
         case 'needle': {
           const cx = b.x + b.w / 2;
-          go([cx, b.y + 8], side, 14); // к стрелке подходим в зазоре над карточками, не задевая кнопки фильтров
+          go([cx, b.y + 8], side, 18); // к стрелке подходим в зазоре над карточками, не задевая кнопки фильтров
           segs[segs.length - 1].push([cx, b.y + b.h + 24]);
           break;
         }
