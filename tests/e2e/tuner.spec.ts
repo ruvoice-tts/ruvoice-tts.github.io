@@ -30,3 +30,15 @@ test('с клавиатуры от фильтров доходим до кноп
   }
   await expect(first).toBeFocused();
 });
+
+// Чтец не видит, какая карточка подсветилась: перед каждым голосом живая область называет его.
+test('«Слушать подряд» говорит чтецу, чей голос звучит', async ({ page }) => {
+  await page.goto('/');
+  const first = page.locator('#voices li.voice').first();
+  const name = (await first.locator('.v-play .vh').textContent())!.replace(/^: /, '');
+  await page.locator('#tuner-all').click();
+  await expect(page.locator('#tuner-live')).toHaveText(name);
+  await expect(first).toHaveClass(/is-playing/, { timeout: 3000 });
+  await page.locator('#tuner-all').click();
+  await expect(page.locator('#tuner-live')).toHaveText('');
+});

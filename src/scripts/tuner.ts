@@ -14,6 +14,7 @@ export function initTuner(): void {
   const cards = [...root.querySelectorAll<HTMLElement>('li.voice')];
   const list = root.querySelector<HTMLElement>('.voice-list')!;
   const seqBtn = root.querySelector<HTMLButtonElement>('#tuner-all')!;
+  const live = root.querySelector<HTMLElement>('#tuner-live')!;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
   let seq = false;
 
@@ -59,6 +60,7 @@ export function initTuner(): void {
     if (!seq) return;
     seq = false;
     seqBtn.textContent = 'Слушать подряд';
+    live.textContent = '';
   }
 
   for (const card of cards) {
@@ -89,7 +91,9 @@ export function initTuner(): void {
       const c = queue[i++];
       // крутим только саму ленту: scrollIntoView тянул бы к ней всю страницу, даже если человек ушёл ниже
       list.scrollTo({ left: c.offsetLeft - (list.clientWidth - c.offsetWidth) / 2, behavior: reduce.matches ? 'auto' : 'smooth' });
-      play(c, next);
+      // чтецу — чей голос сейчас прозвучит (как в имени кнопки), и пауза, чтобы объявление не легло на образец
+      live.textContent = c.querySelector('.v-play .vh')!.textContent!.replace(/^: /, '');
+      setTimeout(() => { if (seq) play(c, next); }, 900);
     };
     next();
   });

@@ -47,6 +47,7 @@ const data = Object.fromEntries(list.map(v => [v.key, Object.fromEntries(Object.
     </ul>
   </div>
   <button type="button" class="all" id="tuner-all">Слушать подряд</button>
+  <p class="vh" id="tuner-live" aria-live="polite"></p>
 </section>
 <script type="application/json" id="tuner-data" is:inline set:html={JSON.stringify(data)}></script>
 
