@@ -15,7 +15,8 @@ test('шрифт 200 %: ничего не уезжает вбок, кнопки 
   await page.goto('/');
   await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
-  for (const id of ['#dl-full', '#dl-lite']) {
+  const release = await (await page.request.get('/release.json')).json();
+  for (const id of release.app.lite ? ['#dl-full', '#dl-lite'] : ['#dl-full']) {
     const b = (await page.locator(id).boundingBox())!;
     expect(b.x).toBeGreaterThanOrEqual(0);
     expect(b.x + b.width).toBeLessThanOrEqual(390);

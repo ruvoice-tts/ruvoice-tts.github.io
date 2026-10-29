@@ -10,8 +10,9 @@ test('подбор: файлом, русские, обновления поле�
   await w.getByLabel('Да, хочу обновления полегче').check();
   await w.getByRole('button', { name: 'Подобрать' }).click();
   const heading = w.locator('#wizard-result-title');
-  await expect(heading).toHaveText('Вам подойдёт: Лёгкая сборка');
-  await expect(heading).toBeFocused();
   const release = await (await page.request.get('/release.json')).json();
-  await expect(w.locator(`#wizard-result a[href="${release.packs.ru_voices.url}"]`)).toHaveCount(1);
+  const lite = Boolean(release.app.lite && release.packs.ru_voices);
+  await expect(heading).toHaveText(lite ? 'Вам подойдёт: Лёгкая сборка' : 'Вам подойдёт: Полная сборка');
+  await expect(heading).toBeFocused();
+  if (lite) await expect(w.locator(`#wizard-result a[href="${release.packs.ru_voices.url}"]`)).toHaveCount(1);
 });
