@@ -60,13 +60,13 @@ export function initThread(): void {
       if (!el.getClientRects().length) continue;
       // после точки надзаголовка нить уходит влево, в поле: вправо она перечеркнула бы сам надзаголовок
       const b = box(el), side = el.dataset.threadSide ?? (prev === 'pin' || prev === 'start' ? 'left' : undefined);
+      const prevKind = prev;
       prev = el.dataset.thread ?? '';
       switch (el.dataset.thread) {
-        case 'start': {
-          const s: P = [b.x + (70.7 - 18) / 72 * b.w, b.y + (58.3 - 18) / 72 * b.h];
-          segs[segs.length - 1].push(s, [s[0] - 6, s[1] + 70]);
+        case 'start':
+          // нижний конец внешней дуги логотипа: отсюда нить продолжает «звуковую волну» иконки
+          segs[segs.length - 1].push([b.x + (70.7 - 18) / 72 * b.w, b.y + (58.3 - 18) / 72 * b.h]);
           break;
-        }
         case 'wave': {
           // Плеер — часть нити: она входит в его левый край и выходит из правого горизонтально,
           // на высоте волны внутри. Спуск по полю переходит в горизонталь дугой радиуса r у самого края.
@@ -84,7 +84,10 @@ export function initThread(): void {
         }
         case 'pin': {
           const dot = parseFloat(getComputedStyle(el, '::before').left) || 0;
-          go([b.x + dot + 4, b.y + b.h / 2], side);
+          const to: P = [b.x + dot + 4, b.y + b.h / 2], from = last();
+          // от логотипа к первой точке — одна мягкая S-дуга через середину, без захода на поле
+          if (prevKind === 'start' && from) segs[segs.length - 1].push([(from[0] + to[0]) / 2, (from[1] + to[1]) / 2], to);
+          else go(to, side);
           break;
         }
         case 'needle': {
@@ -148,11 +151,25 @@ export function initThread(): void {
   // Нить — украшение: считается после загрузки страницы, в свободное время, чтобы не задерживать первую отрисовку.
   const start = () => {
     layout();
-    let size = `${page.clientWidth}x${page.scrollHeight}`;
-    new ResizeObserver(() => {
-      const now = `${page.clientWidth}x${page.scrollHeight}`;
-      if (now !== size) { size = now; layout(); }
-    }).observe(page);
+    // Пересчёт, когда меняется раскладка: не только высота страницы, но и разделы и колонка первого экрана —
+    // догрузились переносы или шрифт, абзац перестроился, плеер съехал, а страница той же высоты.
+    // Первые вызовы наблюдателя приходят сразу после observe — они только запоминают размеры:
+    // пересчёт без анимации в этот момент сорвал бы появление нити.
+    let queuedLayout = false;
+    const sizes = new WeakMap<Element, string>();
+    const ro = new ResizeObserver(entries => {
+      let changed = false;
+      for (const e of entries) {
+        const k = `${Math.round(e.contentRect.width)}x${Math.round(e.contentRect.height)}`;
+        if (sizes.has(e.target) && sizes.get(e.target) !== k) changed = true;
+        sizes.set(e.target, k);
+      }
+      if (!changed || queuedLayout) return;
+      queuedLayout = true;
+      requestAnimationFrame(() => { queuedLayout = false; layout(); });
+    });
+    ro.observe(page);
+    for (const el of document.querySelectorAll('main > section, .hero-text')) ro.observe(el);
     reduce.addEventListener('change', layout);
     let queued = false;
     addEventListener('scroll', () => {

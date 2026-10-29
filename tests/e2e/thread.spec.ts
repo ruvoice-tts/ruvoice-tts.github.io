@@ -14,6 +14,8 @@ test('нить выходит из значка и тянется вниз, а �
   }
   expect(drawn.length).toBeGreaterThan(5);
   expect(drawn[0]).toBeLessThan(drawn.at(-1)! * 0.3);
+  // тянется, а не появляется скачком: есть кадры посередине
+  expect(drawn.some(v => v > drawn.at(-1)! * 0.15 && v < drawn.at(-1)! * 0.85)).toBe(true);
   for (let i = 1; i < drawn.length; i++) expect(drawn[i]).toBeGreaterThanOrEqual(drawn[i - 1] - 1);
 });
 
@@ -64,4 +66,30 @@ test('нить входит в плеер и выходит из него ров
   });
   expect(Math.abs(r.entry)).toBeLessThanOrEqual(3);
   expect(Math.abs(r.exit)).toBeLessThanOrEqual(2);
+});
+
+// Первый заход: словарь переносов и шрифты догружаются позже, абзац над плеером перестраивается и плеер
+// сдвигается, а высота страницы та же (карточка скачивания выше колонки). Нить должна пересчитаться.
+test('плеер сдвинулся после отрисовки нити — нить переезжает вместе с ним', async ({ page }) => {
+  await page.setViewportSize({ width: 1424, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await page.waitForFunction(() => document.querySelectorAll('#thread path.line').length > 1);
+  const before = await page.evaluate(() => document.documentElement.scrollHeight);
+  await page.addStyleTag({ content: '.lede { margin-bottom: -30px !important; }' });
+  await page.waitForTimeout(400);
+  expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(before);
+  const off = await page.evaluate(() => {
+    const pg = document.getElementById('page')!.getBoundingClientRect();
+    const wave = document.querySelector('.wave')!.getBoundingClientRect();
+    const cy = wave.top + wave.height / 2 - pg.top, x = document.getElementById('listen')!.getBoundingClientRect().left - pg.left;
+    const a = document.querySelector<SVGPathElement>('#thread path.line')!;
+    let best = { d: 1e9, y: 0 };
+    for (let s = 0; s <= a.getTotalLength(); s += 1) {
+      const p = a.getPointAtLength(s);
+      if (Math.abs(p.y - cy) < 80 && Math.abs(p.x - x) < best.d) best = { d: Math.abs(p.x - x), y: p.y };
+    }
+    return best.y - cy;
+  });
+  expect(Math.abs(off)).toBeLessThanOrEqual(3);
 });
