@@ -50,7 +50,6 @@ export function initHero(): void {
     setWord(-1);
     amp = 0;
     bar.classList.remove('is-playing');
-    btn.setAttribute('aria-pressed', 'false');
     label.textContent = msg;
     timeEl.textContent = `0:00 / ${fmt(Math.round(data.duration))}`;
     draw(0, 0);
@@ -59,7 +58,6 @@ export function initHero(): void {
   btn.addEventListener('click', () => {
     if (player.current === data.src) { player.stop(); return; }
     bar.classList.add('is-playing');
-    btn.setAttribute('aria-pressed', 'true');
     label.textContent = 'Остановить';
     void player.play(data.src, {
       onTick: t => {

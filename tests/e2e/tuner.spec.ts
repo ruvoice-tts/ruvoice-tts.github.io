@@ -13,10 +13,11 @@ test('одновременно играет один голос', async ({ page 
   const a = page.locator('#voices li.voice').nth(0).locator('button');
   const b = page.locator('#voices li.voice').nth(1).locator('button');
   await a.click();
-  await expect(a).toHaveAttribute('aria-pressed', 'true');
+  await expect(a).toContainText('Остановить');
   await b.click();
-  await expect(b).toHaveAttribute('aria-pressed', 'true');
-  await expect(a).toHaveAttribute('aria-pressed', 'false');
+  await expect(b).toContainText('Остановить');
+  await expect(a).toContainText('Послушать');
+  await expect(a).not.toHaveAttribute('aria-pressed');
 });
 
 test('с клавиатуры от фильтров доходим до кнопки первого голоса', async ({ page }) => {

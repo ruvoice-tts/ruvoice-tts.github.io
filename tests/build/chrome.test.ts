@@ -35,3 +35,15 @@ test('третья ссылка ведёт чтеца прямо к пакам: 
   expect(page('/packs/').querySelector('#pack-list a.pack-dl')).not.toBeNull();
   expect(skip('/changelog/').getAttribute('href')).toBe('/packs/');
 });
+
+// Подпись кнопки прослушивания сама говорит, что будет («Послушать» / «Остановить»); aria-pressed к ней
+// добавил бы «Остановить, включено». Он остаётся только там, где подпись постоянна (тема, примеры чтения).
+test('у кнопок прослушивания меняется подпись, aria-pressed нет', () => {
+  for (const path of ['/', '/packs/'])
+    for (const b of page(path).querySelectorAll('#play-btn, .v-play, button[data-play]')) expect(b.hasAttribute('aria-pressed'), path).toBe(false);
+});
+
+test('у кнопок прослушивания на главной разные имена', () => {
+  const names = page('/').querySelectorAll('.v-play, button[data-play]').map(b => norm(b.text));
+  expect(names.filter((n, i) => names.indexOf(n) !== i)).toEqual([]);
+});

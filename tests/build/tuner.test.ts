@@ -10,7 +10,7 @@ const visible = () => {
 test('в ленте голоса видимых паков и встроенные', () => {
   const cards = page('/').querySelectorAll('#voices li.voice');
   expect(cards.length).toBe(visible().length);
-  for (const c of cards) expect(c.querySelector('button')!.getAttribute('aria-pressed')).toBe('false');
+  for (const c of cards) expect(c.querySelector('button')!.hasAttribute('aria-pressed')).toBe(false);
 });
 
 test('украинских нет, пока их пак не выложен', () => {

@@ -30,7 +30,7 @@ const first = reads[0];
   <div class="homo">
     <p class="homo-text">Король жил в з<mark>а́</mark>мке, а на двери висел зам<mark>о́</mark>к.</p>
     <p class="homo-cap">Омографы по контексту: за́мок и замо́к</p>
-    <button type="button" class="homo-play" id="homo-play" aria-pressed="false" data-play={`${base}${S.homograph.file}`}>
+    <button type="button" class="homo-play" id="homo-play" data-play={`${base}${S.homograph.file}`}>
       <span class="i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" /></svg></span>
       <span class="label">Послушать</span><span class="vh">: король жил в за́мке, а на двери висел замо́к</span>
     </button>
@@ -86,6 +86,6 @@ const first = reads[0];
   @media (min-width: 720px) { .homo-play { grid-row: 1 / span 2; grid-column: 2; } }
   .homo-play .i { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--indigo); color: var(--on-indigo); }
   .homo-play svg { width: 16px; height: 16px; }
-  .homo-play[aria-pressed="true"] { border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber-glow); }
+  .homo-play.is-on { border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber-glow); }
   @media (prefers-reduced-motion: reduce) { .chip-read { transition: none; } }
 </style>

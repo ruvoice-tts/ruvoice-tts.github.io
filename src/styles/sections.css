@@ -26,4 +26,4 @@
   background: var(--indigo); color: var(--on-indigo);
 }
 .play-pill .i svg { width: 16px; height: 16px; }
-.play-pill[aria-pressed="true"] { border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber-glow); }
+.play-pill.is-on { border-color: var(--amber); box-shadow: 0 0 0 3px var(--amber-glow); }

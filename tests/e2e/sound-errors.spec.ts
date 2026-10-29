@@ -11,7 +11,7 @@ for (const [route, selector] of [['/', '#homo-play'], ['/', '#sr-play'], ['/pack
     const btn = page.locator(selector).first();
     if (selector === 'section.pack .mini') await page.locator('section.pack details summary').first().click();
     await btn.click();
-    await expect(btn).toHaveAttribute('aria-pressed', 'false');
+    await expect(btn).not.toHaveAttribute('aria-pressed');
     await expect(btn).toContainText('Звук не включился');
   });
 }

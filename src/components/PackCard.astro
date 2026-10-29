@@ -21,8 +21,8 @@ const Tag = compact ? 'h3' : 'h2';
   <div class="actions">
     <a class="pack-dl" href={p.url} id={`${compact ? 'tease' : 'pack'}-${p.id}-dl`}>Скачать пак<span class="vh"> «{p.title}», ZIP,</span> <span class="sz">{size}</span></a>
     {list[0] && (
-      <button type="button" class="play-pill" data-play={src(list[0].samples.book)} aria-pressed="false">
-        <span class="i" aria-hidden="true" set:html={play} /><span class="label">Послушать</span><span class="vh">: {list[0].name ?? list[0].id}</span>
+      <button type="button" class="play-pill" data-play={src(list[0].samples.book)}>
+        <span class="i" aria-hidden="true" set:html={play} /><span class="label">Послушать</span><span class="vh">: {list[0].name ?? list[0].id}, пак «{p.title}»</span>
       </button>
     )}
   </div>
@@ -38,7 +38,7 @@ const Tag = compact ? 'h3' : 'h2';
         {list.map(v => (
           <li>
             <span class="vname">{v.name ?? v.id}</span>{v.name && <span class="vid">{v.id}</span>}
-            <button type="button" class="mini" data-play={src(v.samples.book)} aria-pressed="false">
+            <button type="button" class="mini" data-play={src(v.samples.book)}>
               <span class="vh"><span class="label">Послушать</span>: {v.name ?? v.id}</span><span aria-hidden="true" set:html={play} />
             </button>
           </li>
@@ -80,6 +80,6 @@ const Tag = compact ? 'h3' : 'h2';
     display: grid; place-items: center; background: var(--indigo); color: var(--on-indigo);
   }
   .mini :global(svg) { width: 16px; height: 16px; }
-  .mini[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--amber-glow), 0 0 0 1px var(--amber); }
+  .mini.is-on { box-shadow: 0 0 0 3px var(--amber-glow), 0 0 0 1px var(--amber); }
   .compact { padding: 22px; }
 </style>

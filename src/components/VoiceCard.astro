@@ -17,12 +17,12 @@ const title = v.name ?? v.id;
   <p class="v-facts">{origin} · {where}</p>
   {note && <p class="v-note">{note}</p>}
   <div class="v-wave" aria-hidden="true"><svg><path d="M0 20" /></svg></div>
-  <button type="button" class="v-play" aria-pressed="false">
+  <button type="button" class="v-play">
     <span class="v-icon" aria-hidden="true">
       <svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" /></svg>
       <svg class="i-stop" viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1.2" /><rect x="13.5" y="5" width="4" height="14" rx="1.2" /></svg>
     </span>
-    <span class="vlabel">Послушать</span><span class="vh">: {title}</span>
+    <span class="vlabel">Послушать</span><span class="vh">: {title}{v.name && `, ${v.id}`}</span>
   </button>
 </li>
 

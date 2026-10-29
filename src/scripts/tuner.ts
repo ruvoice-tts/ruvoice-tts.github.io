@@ -33,7 +33,6 @@ export function initTuner(): void {
   };
   const setState = (card: HTMLElement, on: boolean, text = on ? 'Остановить' : 'Послушать') => {
     const btn = card.querySelector('button')!;
-    btn.setAttribute('aria-pressed', String(on));
     btn.querySelector('.vlabel')!.textContent = text;
     card.classList.toggle('is-playing', on);
     if (!on) drawWave(card, 0, 0);
