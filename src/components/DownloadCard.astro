@@ -1,0 +1,77 @@
+---
+import { formatDateRu, formatMB } from '../lib/format';
+import type { AppRelease, PackAsset } from '../lib/github';
+import { downloadOptions } from '../lib/site';
+
+interface Props { app: AppRelease; pack?: PackAsset }
+const { app, pack } = Astro.props;
+const options = downloadOptions(app);
+const icon = 'M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19.5h14';
+---
+<aside class="download" id="download" aria-labelledby="download-title" tabindex="-1">
+  <div class="dl-head">
+    <h2 id="download-title">Скачать RuVoice</h2>
+    <span class="ver">версия {app.version} · {formatDateRu(app.date)}</span>
+  </div>
+  {options.map(o => (
+    <div class="dl-option">
+      <a class={o.id === 'full' ? 'btn btn-primary' : 'btn btn-secondary'} id={`dl-${o.id}`} href={o.asset.url} aria-describedby={`dl-${o.id}-note`}>
+        <span><span class="vh">Скачать: </span>{o.id === 'full' ? 'Полная сборка' : 'Лёгкая сборка'}<span class="vh">, версия {app.version}, APK,</span></span>
+        <span class="size"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={icon} /></svg>{formatMB(o.asset.size)}</span>
+      </a>
+      {o.id === 'full'
+        ? <p class="dl-note" id="dl-full-note">Голоса уже внутри, работает сразу после установки.</p>
+        : <p class="dl-note" id="dl-lite-note">Без голосов: их один раз ставят паком, зато обновления весят меньше.{pack && <> <a href={pack.url} id="dl-pack">Пак голосов, {formatMB(pack.size)}</a></>}</p>}
+    </div>
+  ))}
+  <div class="dl-alt">
+    <a class="ghost" href="https://www.rustore.ru/catalog/app/ru.kost.ruvoice" id="dl-rustore">RuStore <small>обновления приходят сами, обычно на неделю позже</small></a>
+    <a class="ghost" href="https://github.com/kost-t-human/ruvoice-tts/releases" id="dl-github">GitHub <small>все версии и паки</small></a>
+  </div>
+  <p class="req">Android 6.0 и новее, процессор arm64</p>
+</aside>
+
+<style>
+  .download {
+    position: relative; z-index: 3; min-width: 0;
+    display: flex; flex-direction: column; gap: 20px;
+    padding: 28px; border-radius: 30px;
+    background: var(--card); border: 1px solid var(--line);
+    box-shadow: inset 0 1px 0 var(--hi), 0 40px 70px -40px var(--shadow);
+  }
+  .download:focus-visible { outline-offset: 6px; }
+  @media (min-width: 1040px) { .download { margin-top: 36px; } }
+  .dl-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .dl-head h2 { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: 1.875rem; letter-spacing: -.02em; line-height: 1.1; }
+  .ver { font-size: .875rem; color: var(--ink-2); background: var(--bg-2); border-radius: 999px; padding: 4px 12px; font-variant-numeric: tabular-nums; }
+  .dl-option { display: flex; flex-direction: column; gap: 10px; }
+  .btn {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    min-height: 64px; padding: 0 12px 0 24px; border-radius: 999px; text-decoration: none; font-weight: 650; font-size: 1.125rem;
+    transition: transform .18s cubic-bezier(.34, 1.56, .64, 1), background-color .2s;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-primary { background: var(--indigo); color: var(--on-indigo); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 16px 30px -16px var(--shadow); }
+  .btn-primary:hover { background: var(--indigo-2); }
+  .btn-secondary { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+  .btn-secondary:hover { background: var(--bg-2); }
+  .size {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px;
+    font-size: .9375rem; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .btn-primary .size { background: rgba(255, 255, 255, .16); }
+  .btn-secondary .size { background: var(--bg-2); }
+  .size svg { width: 18px; height: 18px; }
+  .dl-note { margin: 0; padding-inline: 4px; font-size: .9375rem; line-height: 1.5; color: var(--ink-2); }
+  .dl-note a { color: var(--ink); font-weight: 600; text-decoration-color: var(--amber); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  .dl-alt { display: grid; grid-template-columns: 1fr; gap: 10px; border-top: 1px solid var(--line); padding-block-start: 20px; }
+  .ghost {
+    display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 60px; padding: 8px 18px;
+    border-radius: 20px; border: 1px solid var(--outline); text-decoration: none; font-weight: 650; line-height: 1.2;
+  }
+  .ghost small { font-weight: 400; font-size: .8125rem; color: var(--ink-3); }
+  .ghost:hover { background: var(--bg-2); }
+  .req { margin: 0; font-size: .875rem; color: var(--ink-3); text-align: center; }
+  @media (max-width: 420px) { .download { padding: 20px; } }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>

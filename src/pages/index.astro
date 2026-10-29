@@ -1,9 +1,13 @@
 ---
+import Aurora from '../components/Aurora.astro';
+import Hero from '../components/Hero.astro';
+import Thread from '../components/Thread.astro';
 import Base from '../layouts/Base.astro';
 ---
-<Base title="RuVoice — живой голос для любой читалки" description="Офлайн-голос Android для книг и экранного чтеца: нейросеть Silero прямо на телефоне." path="/">
-  <main class="wrap">
-    <h1>Живой голос для любой читалки</h1>
-    <p>Сайт собирается.</p>
+<Base title="RuVoice — живой голос для любой читалки" description="Офлайн-голос Android для книг и экранного чтеца: нейросеть Silero прямо на телефоне, ударения по смыслу, числа и даты по-русски." path="/">
+  <Aurora />
+  <Thread />
+  <main>
+    <Hero />
   </main>
 </Base>

@@ -1,0 +1,63 @@
+---
+import { pluralRu } from '../lib/format';
+
+interface Props { duration: number }
+const n = Math.round(Astro.props.duration);
+const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+---
+<div class="listen" id="listen">
+  <button class="play-btn" id="play-btn" type="button" aria-pressed="false" aria-describedby="listen-meta">
+    <span class="play" aria-hidden="true">
+      <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" /></svg>
+      <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="4" height="14" rx="1.2" /><rect x="13.5" y="5" width="4" height="14" rx="1.2" /></svg>
+    </span>
+    <span class="listen-text">
+      <span class="listen-label" id="listen-label">Послушать, как звучит</span>
+      <span class="listen-meta" id="listen-meta">Голос Айдар прочитает этот экран, {n}&nbsp;{pluralRu(n, 'секунду', 'секунды', 'секунд')}</span>
+    </span>
+  </button>
+  <div class="wave" aria-hidden="true" data-thread="wave" data-thread-side="left">
+    <svg id="wave"><path d="M0 24" /><circle r="5" cx="0" cy="24" /></svg>
+  </div>
+  <span class="listen-time" id="listen-time" aria-hidden="true">0:00 / {fmt(Math.round(Astro.props.duration))}</span>
+</div>
+
+<style>
+  .listen {
+    position: relative; z-index: 3;
+    display: grid; grid-template-columns: auto minmax(48px, 1fr) auto; align-items: center; gap: 16px;
+    max-width: 640px; padding: 10px 24px 10px 10px;
+    background: var(--card); border: 1px solid var(--outline); border-radius: 999px;
+    box-shadow: inset 0 1px 0 var(--hi), 0 22px 44px -26px var(--shadow);
+  }
+  .play-btn {
+    display: flex; align-items: center; gap: 14px; padding: 0 8px 0 0; min-height: 60px;
+    background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; border-radius: 999px;
+  }
+  .play {
+    width: 60px; height: 60px; flex: none; border-radius: 50%;
+    display: grid; place-items: center; background: var(--indigo); color: var(--on-indigo);
+    box-shadow: 0 0 0 4px var(--card), 0 0 0 6px var(--amber), 0 12px 24px -10px var(--shadow);
+    transition: transform .18s cubic-bezier(.34, 1.56, .64, 1), background-color .2s;
+  }
+  .play-btn:hover .play { background: var(--indigo-2); }
+  .play-btn:active .play { transform: scale(.97); }
+  .play svg { width: 22px; height: 22px; }
+  .ic-pause { display: none; }
+  .is-playing .ic-play { display: none; }
+  .is-playing .ic-pause { display: block; }
+  .listen-text { display: flex; flex-direction: column; line-height: 1.25; }
+  .listen-label { font-weight: 650; font-size: 1.0625rem; }
+  .listen-meta { font-size: .875rem; color: var(--ink-3); margin-top: 4px; }
+  .wave { height: 48px; min-width: 0; }
+  .wave svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  .wave path { fill: none; stroke: var(--amber); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .wave circle { fill: var(--amber); opacity: 0; transition: opacity .2s; }
+  .is-playing .wave circle { opacity: 1; }
+  .listen-time { font-size: .875rem; color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  @media (max-width: 520px) {
+    .listen { gap: 10px; padding-right: 16px; }
+    .listen-time, .listen-meta { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .play, .wave circle { transition: none; } }
+</style>

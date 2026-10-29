@@ -1,0 +1,64 @@
+---
+import phrases from '../data/phrases.json';
+import samples from '../data/samples.json';
+import { getSite } from '../lib/site';
+import DownloadCard from './DownloadCard.astro';
+import ListenBar from './ListenBar.astro';
+
+const { release } = await getSite();
+// заголовок и абзац — ровно текст озвучки: слово на экране = слово в таймингах
+const [first, ...rest] = phrases.hero.text.split('. ');
+const h1 = first.split(' ');
+const lede = rest.join('. ').split(' ');
+const glue = new Set(['для', 'на', 'без', 'по', 'и', 'как']); // короткие слова не отрываются от следующего
+const sep = (w: string, last: boolean) => (last ? '' : glue.has(w.toLowerCase()) ? ' ' : ' ');
+const hero = samples.hero;
+const data = { src: `${import.meta.env.BASE_URL}${hero.file}`, duration: hero.duration, hop: hero.hop, env: hero.env, words: hero.words };
+---
+<section class="wrap hero" aria-labelledby="hero-title">
+  <div class="hero-text">
+    <p class="eyebrow">Голос Android для книг и экранного чтеца</p>
+    <h1 id="hero-title">{h1.map((w, i) => <>{i === 3 ? <em class="w">{w}</em> : <span class="w">{w}</span>}{sep(w, i === h1.length - 1)}</>)}</h1>
+    <p class="lede">{lede.map((w, i) => <><span class="w">{w}</span>{sep(w, i === lede.length - 1)}</>)}</p>
+    <ListenBar duration={hero.duration} />
+  </div>
+  <DownloadCard app={release.app} pack={release.packs.ru_voices} />
+  <ul class="facts" aria-label="Коротко">
+    <li>Бесплатно</li><li>Без рекламы</li><li>Без интернета</li><li>Открытый код</li>
+  </ul>
+</section>
+<script type="application/json" id="hero-data" is:inline set:html={JSON.stringify(data)}></script>
+
+<script>
+  import { initHero } from '../scripts/hero';
+  initHero();
+</script>
+
+<style>
+  .hero { display: grid; gap: 40px 64px; grid-template-columns: minmax(0, 1fr); padding-block: 56px 40px; }
+  @media (min-width: 1040px) {
+    .hero { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); padding-block: 88px 56px; align-items: start; }
+  }
+  .hero-text { position: relative; min-width: 0; display: flex; flex-direction: column; gap: 28px; }
+  .eyebrow {
+    margin: 0; display: inline-flex; align-items: center; gap: 10px;
+    font-size: .8125rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2);
+  }
+  .eyebrow::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 4px var(--amber-glow); }
+  h1 {
+    margin: 0; font-family: var(--font-display); font-weight: 560; font-optical-sizing: auto;
+    font-size: clamp(2.9rem, 1.5rem + 5.4vw, 6.25rem); line-height: .98; letter-spacing: -.03em; text-wrap: balance;
+  }
+  h1 em { font-style: italic; font-weight: 480; color: var(--accent-word); letter-spacing: -.02em; }
+  .lede { margin: 0; max-width: 33em; font-size: clamp(1.125rem, 1rem + .45vw, 1.3125rem); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+  .w { border-radius: .2em; transition: background-color .14s ease, box-shadow .14s ease, color .14s ease; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .w:global(.is-on) { background: var(--hl); box-shadow: 0 0 0 .1em var(--hl); color: var(--ink); }
+  h1 .w:global(.is-on) { box-shadow: 0 0 0 .05em var(--hl); }
+  .facts {
+    grid-column: 1 / -1; list-style: none; margin: 8px 0 0; padding: 0;
+    display: flex; flex-wrap: wrap; gap: 10px 28px; color: var(--ink-2); font-weight: 600; font-size: .9375rem;
+  }
+  .facts li { display: inline-flex; align-items: center; gap: 10px; }
+  .facts li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
+  @media (prefers-reduced-motion: reduce) { .w { transition: none; } }
+</style>

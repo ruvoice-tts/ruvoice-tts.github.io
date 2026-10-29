@@ -1,0 +1,19 @@
+<svg class="thread" id="thread" aria-hidden="true" focusable="false"></svg>
+
+<script>
+  import { initThread } from '../scripts/thread';
+  initThread();
+</script>
+
+<style>
+  .thread { position: absolute; left: 0; top: 0; z-index: 1; pointer-events: none; overflow: visible; }
+  .thread :global(path) {
+    fill: none; stroke: var(--amber); stroke-linecap: round; stroke-linejoin: round;
+    transition: stroke-dashoffset .3s linear;
+  }
+  .thread :global(.line) { stroke-width: 3; }
+  /* свечение вторым путём, а не CSS-фильтром: фильтр на высоком SVG тормозит слабые телефоны */
+  .thread :global(.glow) { stroke-width: 9; opacity: .2; }
+  .thread:global(.is-drawing) :global(path) { transition: stroke-dashoffset 1.25s cubic-bezier(.65, 0, .35, 1); }
+  @media (prefers-reduced-motion: reduce) { .thread :global(path) { transition: none !important; } }
+</style>
