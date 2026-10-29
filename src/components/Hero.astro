@@ -18,7 +18,7 @@ const data = { src: `${import.meta.env.BASE_URL}${hero.file}`, duration: hero.du
 <section class="wrap hero" aria-labelledby="hero-title">
   <div class="hero-text">
     <p class="eyebrow">Голос Android для книг и экранного чтеца</p>
-    <h1 id="hero-title">{h1.map((w, i) => <>{i === 3 ? <em class="w">{w}</em> : <span class="w">{w}</span>}{sep(w, i === h1.length - 1)}</>)}</h1>
+    <h1 id="hero-title">{h1.map((w, i) => <>{i === 3 ? <em class="w">{w}</em> : <span class="w">{w}</span>}{i < h1.length - 1 ? ' ' : ''}</>)}</h1>
     <p class="lede">{lede.map((w, i) => <><span class="w">{w}</span>{sep(w, i === lede.length - 1)}</>)}</p>
     <ListenBar duration={hero.duration} />
   </div>
@@ -47,7 +47,7 @@ const data = { src: `${import.meta.env.BASE_URL}${hero.file}`, duration: hero.du
   .eyebrow::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 4px var(--amber-glow); }
   h1 {
     margin: 0; font-family: var(--font-display); font-weight: 560; font-optical-sizing: auto;
-    font-size: clamp(2.9rem, 1.5rem + 5.4vw, 6.25rem); line-height: .98; letter-spacing: -.03em; text-wrap: balance;
+    font-size: clamp(2.25rem, 1.5rem + 5.4vw, 6.25rem); line-height: .98; letter-spacing: -.03em; text-wrap: balance;
   }
   h1 em { font-style: italic; font-weight: 480; color: var(--accent-word); letter-spacing: -.02em; }
   .lede { margin: 0; max-width: 33em; font-size: clamp(1.125rem, 1rem + .45vw, 1.3125rem); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }

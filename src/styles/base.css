@@ -16,6 +16,9 @@ body::before {
 }
 img { max-width: 100%; height: auto; }
 [hidden] { display: none !important; }
+/* шрифт 200 %: длинное слово («Преобразование», «wp_gk_tramrunner») переносится, а не уезжает за край */
+h1, h2, h3, h4, summary, legend, a, button { overflow-wrap: anywhere; }
+p, li, dd { overflow-wrap: anywhere; hyphens: auto; }
 a { color: inherit; }
 :focus-visible {
   outline: 3px solid var(--ink);

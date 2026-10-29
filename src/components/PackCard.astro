@@ -63,7 +63,7 @@ const Tag = compact ? 'h3' : 'h2';
   /* кнопки прижаты к низу: в ряду карточек они стоят на одной линии, сколько бы ни было текста выше */
   .actions { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-top: auto; padding-top: 12px; }
   .pack-dl {
-    display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 10px 0 22px; border-radius: 999px;
+    display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; min-height: 52px; padding: 6px 10px 6px 22px; border-radius: 28px;
     background: var(--indigo); color: var(--on-indigo); font-weight: 650; text-decoration: none;
   }
   .pack-dl:hover { background: var(--indigo-2); }
@@ -71,7 +71,7 @@ const Tag = compact ? 'h3' : 'h2';
   .all { margin-top: 8px; }
   .all summary { cursor: pointer; min-height: 44px; display: inline-flex; align-items: center; font-weight: 600; }
   .all ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 4px; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }
-  .all li { display: flex; align-items: center; gap: 8px; min-height: 48px; padding-inline: 12px 4px; border-radius: 14px; background: var(--bg-2); }
+  .all li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 48px; min-width: 0; padding: 2px 4px 2px 12px; border-radius: 14px; background: var(--bg-2); }
   .vname { font-weight: 600; }
   .vid { color: var(--ink-3); font-size: .875rem; }
   .mini {
