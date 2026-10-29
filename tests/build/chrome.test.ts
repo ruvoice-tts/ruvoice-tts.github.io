@@ -18,6 +18,10 @@ test('в подвале группа в Telegram', () => {
   expect(norm(page('/').querySelector('footer a[href="https://t.me/ruVoiceTTS"]')!.text)).toBe('Группа в Telegram');
 });
 
-test('нигде нет Апптеки и 4pda', () => {
-  for (const f of distFiles('').filter(f => f.endsWith('.html'))) expect(rawFile(f)).not.toMatch(/appteka|4pda/i);
+test('нигде нет ссылок на Апптеку и 4pda и упоминаний Апптеки', () => {
+  // «4PDA» как пример чтения в нотах релиза — содержимое нот, не ссылка на форум
+  for (const f of distFiles('').filter(f => f.endsWith('.html'))) {
+    expect(rawFile(f), f).not.toMatch(/href="[^"]*(appteka|4pda)/i);
+    expect(rawFile(f), f).not.toMatch(/апптек|appteka/i);
+  }
 });

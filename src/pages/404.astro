@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import { formatMB } from '../lib/format';
+import { getSite } from '../lib/site';
+
+const { release } = await getSite();
+---
+<Base title="Такой страницы нет — RuVoice" description="Страница не найдена." path="/404.html">
+  <main class="wrap sec nf">
+    <h1 class="sec-title">Такой страницы нет</h1>
+    <p class="intro">Возможно, ссылка устарела. Всё нужное есть на главной.</p>
+    <div class="links">
+      <a class="play-pill" href="/">На главную</a>
+      <a class="play-pill" href={release.app.full.url}>Скачать RuVoice<span class="vh">: полная сборка, версия {release.app.version}, APK, {formatMB(release.app.full.size)}</span></a>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .nf { padding-block: 96px 120px; }
+  .links { display: flex; flex-wrap: wrap; gap: 12px; }
+  .links a { padding: 0 24px; }
+</style>

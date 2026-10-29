@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { formatDateRu } from '../lib/format';
+import { renderMarkdown } from '../lib/markdown';
+import { getSite } from '../lib/site';
+
+const { release } = await getSite();
+const entries = await Promise.all(release.changelog.map(async e => ({ ...e, html: await renderMarkdown(e.body) })));
+---
+<Base title="Что нового — RuVoice" description="Список изменений RuVoice TTS по версиям, свежие сверху." path="/changelog/">
+  <main class="wrap sec changes">
+    <h1 class="sec-title">Что нового</h1>
+    {entries.map((e, i) => (
+      <article class="entry" aria-labelledby={`v-${i}`}>
+        <h2 id={`v-${i}`}>RuVoice {e.version} <span class="date">{formatDateRu(e.date)}</span></h2>
+        {i === 0
+          ? <div class="notes" set:html={e.html} />
+          : <details><summary>Показать изменения</summary><div class="notes" set:html={e.html} /></details>}
+        <a class="gh" href={e.url}>Релиз на GitHub<span class="vh"> — RuVoice {e.version}</span></a>
+      </article>
+    ))}
+  </main>
+</Base>
+
+<style>
+  .changes { padding-block: 56px 96px; }
+  .entry { padding-block: 24px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+  h2 { margin: 0; font-family: var(--font-display); font-weight: 560; font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); letter-spacing: -.015em; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+  .date { font-family: var(--font-ui); font-size: 1rem; font-weight: 500; color: var(--ink-3); }
+  .notes { max-width: 52em; color: var(--ink-2); overflow-wrap: anywhere; }
+  .notes :global(ul) { padding-left: 1.3em; margin: 8px 0; }
+  .notes :global(li) { margin-block: 6px; }
+  .notes :global(a) { color: var(--ink); text-decoration-color: var(--amber); }
+  .notes :global(code) { font-size: .92em; background: var(--bg-2); padding: 0 .3em; border-radius: 6px; }
+  details summary { cursor: pointer; min-height: 44px; display: inline-flex; align-items: center; font-weight: 600; }
+  .gh { align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; text-decoration-color: var(--amber); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+</style>

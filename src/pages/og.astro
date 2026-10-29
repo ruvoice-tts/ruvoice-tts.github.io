@@ -1,0 +1,39 @@
+---
+// Картинка превью ссылки (1200×630): tools/og.mjs снимает эту страницу в public/img/og.png. В меню её нет.
+import '@fontsource-variable/literata/opsz.css';
+import '@fontsource-variable/literata/opsz-italic.css';
+import '@fontsource-variable/golos-text';
+import '../styles/tokens.css';
+import Logo from '../components/Logo.astro';
+---
+<!doctype html>
+<html lang="ru" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Превью RuVoice</title>
+  </head>
+  <body>
+    <div class="og">
+      <div class="glow" aria-hidden="true"></div>
+      <svg class="thread" viewBox="0 0 1200 630" aria-hidden="true"><path d="M150,120 C120,260 60,380 210,470 C420,590 760,420 980,470 C1120,500 1150,560 1180,630" /></svg>
+      <div class="brand"><Logo uid="og" class="mark" /><span>RuVoice</span></div>
+      <h1>Живой голос для <em>любой</em> читалки</h1>
+      <p>Офлайн-голос Android для книг и экранного чтеца</p>
+    </div>
+  </body>
+</html>
+
+<style>
+  body { margin: 0; background: var(--bg); }
+  .og { position: relative; width: 1200px; height: 630px; overflow: hidden; background: var(--bg); color: var(--ink); font-family: var(--font-ui); display: flex; flex-direction: column; justify-content: center; padding: 0 96px; box-sizing: border-box; gap: 22px; }
+  .glow { position: absolute; left: -120px; top: -80px; width: 900px; height: 700px; background: radial-gradient(closest-side, var(--lav), transparent) 30% 40% / 70% 70% no-repeat, radial-gradient(closest-side, var(--peach), transparent) 70% 60% / 55% 55% no-repeat; filter: blur(30px); }
+  .thread { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .thread path { fill: none; stroke: var(--amber); stroke-width: 5; stroke-linecap: round; }
+  .brand, h1, p { position: relative; }
+  .brand { display: flex; align-items: center; gap: 14px; font-weight: 650; font-size: 34px; }
+  .brand :global(.mark) { width: 64px; height: 64px; }
+  h1 { margin: 0; font-family: var(--font-display); font-weight: 560; font-size: 96px; line-height: .98; letter-spacing: -.03em; max-width: 900px; }
+  h1 em { font-style: italic; font-weight: 480; color: var(--accent-word); }
+  p { margin: 0; font-size: 32px; color: var(--ink-2); }
+</style>
