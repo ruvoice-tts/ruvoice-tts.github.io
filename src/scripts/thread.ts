@@ -155,7 +155,8 @@ export function initThread(): void {
     // догрузились переносы или шрифт, абзац перестроился, плеер съехал, а страница той же высоты.
     // Первые вызовы наблюдателя приходят сразу после observe — они только запоминают размеры:
     // пересчёт без анимации в этот момент сорвал бы появление нити.
-    let queuedLayout = false;
+    let queuedLayout = false, lastChange = performance.now();
+    let drawing = false, drawTimer = 0; // объявлены до раннего выхода ниже: их читает наблюдатель размеров
     const sizes = new WeakMap<Element, string>();
     const ro = new ResizeObserver(entries => {
       let changed = false;
@@ -164,9 +165,16 @@ export function initThread(): void {
         if (sizes.has(e.target) && sizes.get(e.target) !== k) changed = true;
         sizes.set(e.target, k);
       }
-      if (!changed || queuedLayout) return;
+      if (!changed) return;
+      lastChange = performance.now();
+      if (queuedLayout) return;
       queuedLayout = true;
-      requestAnimationFrame(() => { queuedLayout = false; layout(); });
+      requestAnimationFrame(() => {
+        queuedLayout = false;
+        // перестройка посреди первого рисования (догрузились переносы) — рисуем заново от значка,
+        // иначе пересчёт без анимации показал бы нить сразу целиком
+        if (drawing) { ready = false; layout(); requestAnimationFrame(draw); } else layout();
+      });
     });
     ro.observe(page);
     for (const el of document.querySelectorAll('main > section, .hero-text')) ro.observe(el);
@@ -179,7 +187,20 @@ export function initThread(): void {
     }, { passive: true });
     if (reduce.matches) return;
     // Первый показ: нить выходит из значка и тянется вниз — отрезки по очереди, с одной скоростью.
-    requestAnimationFrame(() => {
+    // Начинаем, когда раскладка успокоилась (250 мс без перестроек, но не дольше 2 с): при первом заходе
+    // догружаются переносы, и пересчёт посреди анимации показал бы нить сразу целиком.
+    const t0 = performance.now();
+    const whenQuiet = () => {
+      // вкладку открыли в фоне — рисуем, когда её покажут: в фоне переходы не идут, нить появилась бы готовой
+      if (document.hidden) { addEventListener('visibilitychange', whenQuiet, { once: true }); return; }
+      const now = performance.now();
+      if (now - lastChange < 250 && now - t0 < 2000) { setTimeout(whenQuiet, 80); return; }
+      requestAnimationFrame(draw);
+    };
+    setTimeout(whenQuiet, 250);
+    const draw = () => {
+      drawing = true;
+      clearTimeout(drawTimer);
       ready = true;
       const vis = lines.map(visible), total = vis.reduce((a, b) => a + b, 0) || 1, D = 1.8;
       let before = 0;
@@ -189,8 +210,11 @@ export function initThread(): void {
         for (const p of [l.glow, l.line]) p.style.transition = t;
       });
       reveal();
-      setTimeout(() => { for (const l of lines) for (const p of [l.glow, l.line]) p.style.transition = ''; }, D * 1000 + 100);
-    });
+      drawTimer = window.setTimeout(() => {
+        drawing = false;
+        for (const l of lines) for (const p of [l.glow, l.line]) p.style.transition = '';
+      }, D * 1000 + 100);
+    };
   };
   const idle = (f: () => void) => ('requestIdleCallback' in window ? requestIdleCallback(f, { timeout: 1200 }) : setTimeout(f, 200));
   if (document.readyState === 'complete') idle(start);

@@ -93,3 +93,38 @@ test('плеер сдвинулся после отрисовки нити — �
   });
   expect(Math.abs(off)).toBeLessThanOrEqual(3);
 });
+
+// Первый заход: пока нить готовится, страница ещё раз перестраивается (догрузились переносы).
+// Нить всё равно должна протянуться от значка, а не появиться целиком.
+test('перестройка страницы в момент появления нити не срывает анимацию', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(() => document.querySelector('#thread path.line')?.getAttribute('d'));
+  await page.addStyleTag({ content: '.lede { margin-bottom: -30px !important; }' });
+  const drawn: number[] = [];
+  for (let i = 0; i < 45; i++) {
+    drawn.push(await page.evaluate(() => {
+      const l = document.querySelector<SVGPathElement>('#thread-a')!;
+      return l.getTotalLength() - (parseFloat(getComputedStyle(l).strokeDashoffset) || 0);
+    }));
+    await page.waitForTimeout(60);
+  }
+  const final = drawn.at(-1)!;
+  expect(drawn.some(v => v > final * 0.15 && v < final * 0.85)).toBe(true);
+});
+
+test('перестройка страницы посреди рисования не показывает нить сразу целиком', async ({ page }) => {
+  await page.goto('/');
+  const part = () => page.evaluate(() => {
+    const l = document.querySelector<SVGPathElement>('#thread-a');
+    if (!l || !l.getAttribute('d')) return 0;
+    return (l.getTotalLength() - (parseFloat(getComputedStyle(l).strokeDashoffset) || 0)) / l.getTotalLength();
+  });
+  await expect.poll(part, { timeout: 5000, intervals: [30] }).toBeGreaterThan(0.08);
+  await page.addStyleTag({ content: '.lede { margin-bottom: -30px !important; }' });
+  await page.waitForTimeout(150);
+  const after: number[] = [];
+  for (let i = 0; i < 40; i++) { after.push(+(await part()).toFixed(3)); await page.waitForTimeout(60); }
+  // тянется дальше по кадрам, а не перескакивает к итогу: несколько разных промежуточных значений
+  const final = after.at(-1)!;
+  expect(new Set(after.filter(v => v < final)).size).toBeGreaterThanOrEqual(4);
+});
