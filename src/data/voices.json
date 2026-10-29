@@ -1,0 +1,959 @@
+[
+ {
+  "key": "ru_voices:aidar",
+  "id": "aidar",
+  "name": "Айдар",
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "silero",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/ru_voices/aidar/book",
+   "dialog": "voice/ru_voices/aidar/dialog",
+   "numbers": "voice/ru_voices/aidar/numbers",
+   "sr": "voice/ru_voices/aidar/sr"
+  }
+ },
+ {
+  "key": "ru_voices:baya",
+  "id": "baya",
+  "name": "Бая",
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "silero",
+  "base": "baya",
+  "builtIn": true,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/ru_voices/baya/book",
+   "dialog": "voice/ru_voices/baya/dialog",
+   "numbers": "voice/ru_voices/baya/numbers",
+   "sr": "voice/ru_voices/baya/sr"
+  }
+ },
+ {
+  "key": "ru_voices:kseniya",
+  "id": "kseniya",
+  "name": "Ксения",
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "silero",
+  "base": "kseniya",
+  "builtIn": true,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/ru_voices/kseniya/book",
+   "dialog": "voice/ru_voices/kseniya/dialog",
+   "numbers": "voice/ru_voices/kseniya/numbers",
+   "sr": "voice/ru_voices/kseniya/sr"
+  }
+ },
+ {
+  "key": "ru_voices:eugene",
+  "id": "eugene",
+  "name": "Евгений",
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "silero",
+  "base": "eugene",
+  "builtIn": true,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/ru_voices/eugene/book",
+   "dialog": "voice/ru_voices/eugene/dialog",
+   "numbers": "voice/ru_voices/eugene/numbers",
+   "sr": "voice/ru_voices/eugene/sr"
+  }
+ },
+ {
+  "key": "ru_voices:xenia",
+  "id": "xenia",
+  "name": "Ксения",
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "silero",
+  "base": "xenia",
+  "builtIn": true,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/ru_voices/xenia/book",
+   "dialog": "voice/ru_voices/xenia/dialog",
+   "numbers": "voice/ru_voices/xenia/numbers",
+   "sr": "voice/ru_voices/xenia/sr"
+  }
+ },
+ {
+  "key": "ru_voices:chulsky",
+  "id": "chulsky",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru_voices/chulsky/book"
+  }
+ },
+ {
+  "key": "ru_voices:anyanov",
+  "id": "anyanov",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru_voices/anyanov/book"
+  }
+ },
+ {
+  "key": "ru_voices:tovarisch",
+  "id": "tovarisch",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru_voices/tovarisch/book"
+  }
+ },
+ {
+  "key": "ru_voices:kazbek",
+  "id": "kazbek",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru_voices/kazbek/book"
+  }
+ },
+ {
+  "key": "ru_voices:grinberg",
+  "id": "grinberg",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "xenia",
+  "builtIn": true,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/ru_voices/grinberg/book",
+   "dialog": "voice/ru_voices/grinberg/dialog",
+   "numbers": "voice/ru_voices/grinberg/numbers",
+   "sr": "voice/ru_voices/grinberg/sr"
+  }
+ },
+ {
+  "key": "ru_voices:solokha",
+  "id": "solokha",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "kseniya",
+  "builtIn": true,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/ru_voices/solokha/book",
+   "dialog": "voice/ru_voices/solokha/dialog",
+   "numbers": "voice/ru_voices/solokha/numbers",
+   "sr": "voice/ru_voices/solokha/sr"
+  }
+ },
+ {
+  "key": "ru_voices:ponomarenko",
+  "id": "ponomarenko",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "kseniya",
+  "builtIn": true,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru_voices/ponomarenko/book"
+  }
+ },
+ {
+  "key": "ru_voices:ruslan",
+  "id": "ruslan",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/ru_voices/ruslan/book",
+   "dialog": "voice/ru_voices/ruslan/dialog",
+   "numbers": "voice/ru_voices/ruslan/numbers",
+   "sr": "voice/ru_voices/ruslan/sr"
+  }
+ },
+ {
+  "key": "ru_voices:pavel",
+  "id": "pavel",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru_voices/pavel/book"
+  }
+ },
+ {
+  "key": "ru_voices:oleg",
+  "id": "oleg",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru_voices/oleg/book"
+  }
+ },
+ {
+  "key": "ru_voices:ivan",
+  "id": "ivan",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru_voices/ivan/book"
+  }
+ },
+ {
+  "key": "ru_voices:boris",
+  "id": "boris",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "eugene",
+  "builtIn": true,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru_voices/boris/book"
+  }
+ },
+ {
+  "key": "ru_voices:dmitri",
+  "id": "dmitri",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/ru_voices/dmitri/book",
+   "dialog": "voice/ru_voices/dmitri/dialog",
+   "numbers": "voice/ru_voices/dmitri/numbers",
+   "sr": "voice/ru_voices/dmitri/sr"
+  }
+ },
+ {
+  "key": "ru_voices:wp_gk_tramrunner",
+  "id": "wp_gk_tramrunner",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru_voices/wp_gk_tramrunner/book"
+  }
+ },
+ {
+  "key": "ru_voices:wp_muratov",
+  "id": "wp_muratov",
+  "name": null,
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "open",
+  "base": "aidar",
+  "builtIn": true,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru_voices/wp_muratov/book"
+  }
+ },
+ {
+  "key": "ru_voices:ilya",
+  "id": "ilya",
+  "name": "Илья",
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "mix",
+  "base": "xenia",
+  "builtIn": true,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/ru_voices/ilya/book",
+   "dialog": "voice/ru_voices/ilya/dialog",
+   "numbers": "voice/ru_voices/ilya/numbers",
+   "sr": "voice/ru_voices/ilya/sr"
+  }
+ },
+ {
+  "key": "ru_voices:olga",
+  "id": "olga",
+  "name": "Ольга",
+  "pack": "ru_voices",
+  "lang": "ru",
+  "source": "mix",
+  "base": "kseniya",
+  "builtIn": true,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/ru_voices/olga/book",
+   "dialog": "voice/ru_voices/olga/dialog",
+   "numbers": "voice/ru_voices/olga/numbers",
+   "sr": "voice/ru_voices/olga/sr"
+  }
+ },
+ {
+  "key": "ru:aidar",
+  "id": "aidar",
+  "name": "Айдар",
+  "pack": "ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": "aidar",
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru/aidar/book"
+  }
+ },
+ {
+  "key": "ru:baya",
+  "id": "baya",
+  "name": "Бая",
+  "pack": "ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": "baya",
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru/baya/book"
+  }
+ },
+ {
+  "key": "ru:kseniya",
+  "id": "kseniya",
+  "name": "Ксения",
+  "pack": "ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": "kseniya",
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru/kseniya/book"
+  }
+ },
+ {
+  "key": "ru:eugene",
+  "id": "eugene",
+  "name": "Евгений",
+  "pack": "ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": "eugene",
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru/eugene/book"
+  }
+ },
+ {
+  "key": "ru:xenia",
+  "id": "xenia",
+  "name": "Ксения",
+  "pack": "ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": "xenia",
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/ru/xenia/book"
+  }
+ },
+ {
+  "key": "cis_be:bel_anatoliy",
+  "id": "bel_anatoliy",
+  "name": "Анатолий",
+  "pack": "cis_be",
+  "lang": "be",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_be/bel_anatoliy/book"
+  }
+ },
+ {
+  "key": "cis_be:bel_dmitriy",
+  "id": "bel_dmitriy",
+  "name": "Дмитрий",
+  "pack": "cis_be",
+  "lang": "be",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_be/bel_dmitriy/book"
+  }
+ },
+ {
+  "key": "cis_be:bel_larisa",
+  "id": "bel_larisa",
+  "name": "Лариса",
+  "pack": "cis_be",
+  "lang": "be",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/cis_be/bel_larisa/book"
+  }
+ },
+ {
+  "key": "cis_uk:ukr_igor",
+  "id": "ukr_igor",
+  "name": "Ігор",
+  "pack": "cis_uk",
+  "lang": "uk",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_uk/ukr_igor/book"
+  }
+ },
+ {
+  "key": "cis_uk:ukr_roman",
+  "id": "ukr_roman",
+  "name": "Роман",
+  "pack": "cis_uk",
+  "lang": "uk",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_uk/ukr_roman/book"
+  }
+ },
+ {
+  "key": "cis_uk_ext:ukr_kateryna",
+  "id": "ukr_kateryna",
+  "name": "Катерина",
+  "pack": "cis_uk_ext",
+  "lang": "uk",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/cis_uk_ext/ukr_kateryna/book"
+  }
+ },
+ {
+  "key": "cis_uk_ext:ukr_lada",
+  "id": "ukr_lada",
+  "name": "Лада",
+  "pack": "cis_uk_ext",
+  "lang": "uk",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_uk_ext/ukr_lada/book"
+  }
+ },
+ {
+  "key": "cis_uk_ext:ukr_mykyta",
+  "id": "ukr_mykyta",
+  "name": "Микита",
+  "pack": "cis_uk_ext",
+  "lang": "uk",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": true,
+  "samples": {
+   "book": "voice/cis_uk_ext/ukr_mykyta/book"
+  }
+ },
+ {
+  "key": "cis_uk_ext:ukr_oleksa",
+  "id": "ukr_oleksa",
+  "name": "Олекса",
+  "pack": "cis_uk_ext",
+  "lang": "uk",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_uk_ext/ukr_oleksa/book"
+  }
+ },
+ {
+  "key": "cis_uk_ext:ukr_tetiana",
+  "id": "ukr_tetiana",
+  "name": "Тетяна",
+  "pack": "cis_uk_ext",
+  "lang": "uk",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_uk_ext/ukr_tetiana/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_aigul",
+  "id": "ru_aigul",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_aigul/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_albina",
+  "id": "ru_albina",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_albina/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_alexandr",
+  "id": "ru_alexandr",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_alexandr/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_alfia",
+  "id": "ru_alfia",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_alfia/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_alfia2",
+  "id": "ru_alfia2",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_alfia2/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_bogdan",
+  "id": "ru_bogdan",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_bogdan/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_dmitriy",
+  "id": "ru_dmitriy",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_dmitriy/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_ekaterina",
+  "id": "ru_ekaterina",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_ekaterina/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_vika",
+  "id": "ru_vika",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_vika/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_gamat",
+  "id": "ru_gamat",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_gamat/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_igor",
+  "id": "ru_igor",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_igor/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_karina",
+  "id": "ru_karina",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_karina/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_kejilgan",
+  "id": "ru_kejilgan",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_kejilgan/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_kermen",
+  "id": "ru_kermen",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_kermen/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_marat",
+  "id": "ru_marat",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_marat/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_miyau",
+  "id": "ru_miyau",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_miyau/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_nurgul",
+  "id": "ru_nurgul",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_nurgul/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_oksana",
+  "id": "ru_oksana",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_oksana/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_onaoy",
+  "id": "ru_onaoy",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_onaoy/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_ramilia",
+  "id": "ru_ramilia",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_ramilia/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_roman",
+  "id": "ru_roman",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_roman/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_safarhuja",
+  "id": "ru_safarhuja",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_safarhuja/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_saida",
+  "id": "ru_saida",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_saida/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_sibday",
+  "id": "ru_sibday",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_sibday/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_zara",
+  "id": "ru_zara",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_zara/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_zhadyra",
+  "id": "ru_zhadyra",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_zhadyra/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_zhazira",
+  "id": "ru_zhazira",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_zhazira/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_zinaida",
+  "id": "ru_zinaida",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_zinaida/book"
+  }
+ },
+ {
+  "key": "cis_ru:ru_eduard",
+  "id": "ru_eduard",
+  "name": null,
+  "pack": "cis_ru",
+  "lang": "ru",
+  "source": "silero",
+  "base": null,
+  "builtIn": false,
+  "inTuner": false,
+  "samples": {
+   "book": "voice/cis_ru/ru_eduard/book"
+  }
+ }
+]
