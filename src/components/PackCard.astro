@@ -27,7 +27,7 @@ const Tag = compact ? 'h3' : 'h2';
     )}
   </div>
   <p class="facts">{[n > 0 && `${n}\u00a0${pluralRu(n, 'голос', 'голоса', 'голосов')}`, lang, size].filter(Boolean).join(' · ')}</p>
-  {!compact && p.minVersion && <p class="meta">Нужна версия {p.minVersion} или новее</p>}
+  {p.minVersion && <p class="meta">Нужна версия {p.minVersion} или новее</p>}
   {p.note && <p class="note">{p.note}</p>}
   {!compact && p.license && <p class="meta">Лицензия: {p.license}</p>}
   {!compact && p.credits && <p class="meta">Авторство записей: {p.credits}</p>}
@@ -70,13 +70,13 @@ const Tag = compact ? 'h3' : 'h2';
   .pack-dl:hover { background: var(--indigo-2); }
   .sz { padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, .16); font-variant-numeric: tabular-nums; }
   .all { order: 2; margin-top: 8px; }
-  .all summary { cursor: pointer; min-height: 44px; display: inline-flex; align-items: center; font-weight: 600; }
+  .all summary { cursor: pointer; min-height: 48px; display: inline-flex; align-items: center; font-weight: 600; }
   .all ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 4px; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }
   .all li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 48px; min-width: 0; padding: 2px 4px 2px 12px; border-radius: 14px; background: var(--bg-2); }
   .vname { font-weight: 600; }
   .vid { color: var(--ink-3); font-size: .875rem; }
   .mini {
-    margin-left: auto; width: 44px; height: 44px; flex: none; border-radius: 50%; border: 0; cursor: pointer;
+    margin-left: auto; width: 48px; height: 48px; flex: none; border-radius: 50%; border: 0; cursor: pointer;
     display: grid; place-items: center; background: var(--indigo); color: var(--on-indigo);
   }
   .mini :global(svg) { width: 16px; height: 16px; }

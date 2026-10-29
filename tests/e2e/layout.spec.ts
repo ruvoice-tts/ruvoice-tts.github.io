@@ -51,3 +51,15 @@ for (const path of ['/', '/packs/']) {
     }
   });
 }
+
+// Цели касания не меньше 48 px, как в самом приложении (рекомендация Android).
+for (const [path, sel] of [['/', 'footer .links a'], ['/', '.transcript summary'], ['/packs/', '.all summary'], ['/packs/', '.mini'],
+  ['/changelog/', 'details summary'], ['/changelog/', 'a.gh']] as const) {
+  test(`цели касания не меньше 48 px: ${path} ${sel}`, async ({ page }) => {
+    await page.goto(path);
+    if (sel === '.mini') await page.locator('.all summary').first().click();
+    const boxes = await page.locator(sel).evaluateAll(els => els.map(e => e.getBoundingClientRect()).filter(r => r.height > 0).map(r => [r.width, r.height]));
+    expect(boxes.length).toBeGreaterThan(0);
+    for (const [w, h] of boxes) expect(Math.min(h, sel === '.mini' ? w : h)).toBeGreaterThanOrEqual(48);
+  });
+}

@@ -46,3 +46,11 @@ test('в карточке пака чтецу сначала «Скачать»:
       expect(next.querySelector('a')!.classList.contains('pack-dl'), path).toBe(true);
     }
 });
+
+test('в карточках паков на главной есть нужная версия приложения', () => {
+  for (const card of page('/').querySelectorAll('#packs .pack')) {
+    const id = card.querySelector('a.pack-dl')!.getAttribute('id')!.replace(/^tease-|-dl$/g, '');
+    const m = meta.find(p => p.id === id);
+    if (m?.minVersion) expect(card.text.replace(/\s+/g, ' '), id).toContain(`Нужна версия ${m.minVersion} или новее`);
+  }
+});
