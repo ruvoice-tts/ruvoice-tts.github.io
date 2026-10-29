@@ -25,3 +25,7 @@ export function distFiles(dir: string): string[] {
   walk(join(DIST, dir));
   return out;
 }
+
+/** Данные релиза, по которым собран сайт (dist/release.json): с ними сверяются ссылки и размеры. */
+export const built = (): import('../../src/lib/github').ReleaseData & { source: 'api' | 'snapshot' } =>
+  JSON.parse(rawFile('release.json'));
