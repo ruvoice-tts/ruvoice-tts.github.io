@@ -31,3 +31,9 @@ test('страница для чтеца: один h1 и не меньше пя�
   expect(p.querySelectorAll('h1').length).toBe(1);
   expect(p.querySelectorAll('main h2').length).toBeGreaterThanOrEqual(5);
 });
+
+test('страница для чтеца не обещает больше, чем проверено: список — чтецы, которых узнаёт движок', () => {
+  const p = page('/screen-reader/');
+  expect(p.querySelectorAll('main h2').map(h => h.text.trim())).toContain('Какие чтецы узнаёт движок');
+  expect(p.querySelector('main')!.text).not.toMatch(/проверен/i);
+});
