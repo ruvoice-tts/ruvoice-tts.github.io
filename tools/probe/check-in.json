@@ -1,0 +1,6 @@
+[
+ {"key":"reads/time","text":"в 21:30","base":"aidar","mode":"books"},
+ {"key":"reads/tsar","text":"Николай II","base":"aidar","mode":"books"},
+ {"key":"reads/money","text":"около 500 рублей","base":"aidar","mode":"books"},
+ {"key":"hero","text":"Живой голос для любой читалки. Нейросеть Silero работает прямо на телефоне, без интернета. Ставит ударения по смыслу, читает числа и даты и подключается как обычный голос Android.","base":"aidar","mode":"books"}
+]
