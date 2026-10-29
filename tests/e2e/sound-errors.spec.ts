@@ -15,3 +15,9 @@ for (const [route, selector] of [['/', '#homo-play'], ['/', '#sr-play'], ['/pack
     await expect(btn).toContainText('Звук не включился');
   });
 }
+
+test('ошибка звука в «Как читается» приходит чтецу', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('#reads button.chip-read').first().click();
+  await expect(page.locator('#reads-live')).toHaveText('Звук не включился, нажмите ещё раз');
+});

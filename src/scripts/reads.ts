@@ -26,19 +26,28 @@ export function initReads(): void {
     outSaid.append(on, off);
   };
 
+  let active: HTMLButtonElement | null = null;
   for (const chip of chips) {
     chip.addEventListener('click', () => {
       const r = data[chip.dataset.key!];
       if (chip.getAttribute('aria-pressed') === 'true') { player.stop(); return; }
+      active = chip;
       for (const c of chips) c.setAttribute('aria-pressed', String(c === chip));
-      live.textContent = `Читается: ${r.display}`;
+      // чтецу — после образца: объявление поверх звука TalkBack заглушил бы сам образец
+      live.textContent = '';
       show(r, 0);
-      const done = () => { chip.setAttribute('aria-pressed', 'false'); show(r, 1); };
+      // прерванный другим примером не трогает ни карточку, ни объявление: там уже следующий
+      const done = (said: string) => {
+        chip.setAttribute('aria-pressed', 'false');
+        if (active !== chip) return;
+        show(r, 1);
+        live.textContent = said;
+      };
       void player.play(r.src, {
         // текст проступает чуть впереди звука: последние буквы появляются к концу фразы, а не после неё
         onTick: t => show(r, Math.min(1, (t - .25) / Math.max(.3, r.duration - .45))),
-        onEnd: done,
-        onError: done,
+        onEnd: () => done(`Читается: ${r.display}`),
+        onError: () => done('Звук не включился, нажмите ещё раз'),
       });
     });
   }
