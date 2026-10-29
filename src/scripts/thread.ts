@@ -46,18 +46,20 @@ export function initThread(): void {
     const gutter = Math.max(6, left0 - (W >= 720 ? 18 : 8));
     const segs: P[][] = [[]];
     const last = () => segs[segs.length - 1].at(-1);
-    // к цели — по полю; повороты широкие (уход на 120 px, подход на approach), чтобы изгибы были плавными
+    // К цели — всегда через поле: уход и подход до трети высоты между точками, чтобы изгибы были плавными.
+    // Порога «далеко ли» нет: при чуть более компактной странице (метрики шрифта, масштаб) нить срезала бы угол.
     const go = (to: P, side: string | undefined, approach = 120) => {
       const from = last();
       const x = side === 'left' ? gutter : W - gutter;
-      if (from && to[1] - from[1] > approach + 200) segs[segs.length - 1].push([x, from[1] + 120], [x, to[1] - approach]);
+      const dy = from ? to[1] - from[1] : 0;
+      if (from && dy > 40) segs[segs.length - 1].push([x, from[1] + Math.min(120, dy / 3)], [x, to[1] - Math.min(approach, dy / 3)]);
       segs[segs.length - 1].push(to);
     };
     let prev = '';
     for (const el of document.querySelectorAll<HTMLElement>('[data-thread]')) {
       if (!el.getClientRects().length) continue;
       // после точки надзаголовка нить уходит влево, в поле: вправо она перечеркнула бы сам надзаголовок
-      const b = box(el), side = el.dataset.threadSide ?? (prev === 'pin' ? 'left' : undefined);
+      const b = box(el), side = el.dataset.threadSide ?? (prev === 'pin' || prev === 'start' ? 'left' : undefined);
       prev = el.dataset.thread ?? '';
       switch (el.dataset.thread) {
         case 'start': {

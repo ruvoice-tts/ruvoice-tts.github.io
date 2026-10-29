@@ -16,3 +16,26 @@ test('нить выходит из значка и тянется вниз, а �
   expect(drawn[0]).toBeLessThan(drawn.at(-1)! * 0.3);
   for (let i = 1; i < drawn.length; i++) expect(drawn[i]).toBeGreaterThanOrEqual(drawn[i - 1] - 1);
 });
+
+// Первый заход: шрифтов ещё нет в кэше, с font-display: optional страница на системных шрифтах и чуть ниже.
+// Нить всё равно огибает карточку скачивания справа, а не срезает наискосок к следующему разделу.
+for (const width of [1424, 1440, 1280, 1100]) {
+  test(`без своих шрифтов нить после плеера огибает карточку скачивания, ${width} px`, async ({ page }) => {
+    await page.route('**/fonts/**', r => r.abort());
+    await page.setViewportSize({ width, height: 900 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    // у человека страница бывает чуть компактнее (метрики шрифта, масштаб): обход не должен зависеть от порога
+    await page.addStyleTag({ content: '.hero { padding-bottom: 12px !important; }' });
+    await page.waitForTimeout(300);
+    await page.waitForFunction(() => document.querySelectorAll('#thread path.line').length > 1);
+    const { maxX, cardRight } = await page.evaluate(() => {
+      const l = document.querySelectorAll<SVGPathElement>('#thread path.line')[1];
+      let maxX = 0;
+      for (let s = 0; s < Math.min(l.getTotalLength(), 900); s += 10) maxX = Math.max(maxX, l.getPointAtLength(s).x);
+      const page = document.getElementById('page')!.getBoundingClientRect();
+      return { maxX, cardRight: document.getElementById('download')!.getBoundingClientRect().right - page.left };
+    });
+    expect(maxX).toBeGreaterThan(cardRight);
+  });
+}
