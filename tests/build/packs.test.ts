@@ -27,3 +27,9 @@ test('девять вопросов, в ответе про ошибку — г�
   expect(faq.querySelectorAll('h3').length).toBe(9);
   expect(faq.querySelector('a[href="https://t.me/ruVoiceTTS"]')).not.toBeNull();
 });
+
+test('в строке фактов число отделено от слова «голоса»', () => {
+  for (const f of page('/').querySelectorAll('#packs-title ~ .grid .facts')) {
+    expect(f.text).toMatch(/^\d+\s(голос|голоса|голосов) · /);
+  }
+});

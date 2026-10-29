@@ -3,7 +3,7 @@
 src/data/samples.json, src/data/voices.json.
   /home/kost/serverApp/ruvoice/venv-et/bin/python tools/make_samples.py           — сгенерировать всё
   /home/kost/serverApp/ruvoice/venv-et/bin/python tools/make_samples.py --check   — только проверить"""
-import json, os, re, subprocess, sys, tempfile, wave
+import json, os, re, shutil, subprocess, sys, tempfile, wave
 
 import numpy as np
 
@@ -205,6 +205,7 @@ def main():
         sys.exit(0 if check(samples, voices, phrases) else 1)
 
     ensure_packs()
+    shutil.rmtree(AUDIO, ignore_errors=True)  # образцы выкинутых фраз не остаются в public/audio
     packs = {pid: synth.load_pack(os.path.join(synth.PACKS, pid)) for pid in PACK_ORDER}
     voices = build_voices(packs)
 

@@ -4,7 +4,8 @@ import samples from '../data/samples.json';
 
 const S = samples as Record<string, { file: string; duration: number; raw?: string; display?: string }>;
 const base = import.meta.env.BASE_URL;
-const reads = phrases.reads.map(r => ({ key: `reads/${r.id}`, ...S[`reads/${r.id}`] }));
+// точку в конце ставит конвейер (конец фразы для модели); в подписи под примером она лишняя
+const reads = phrases.reads.map(r => { const x = S[`reads/${r.id}`]; return { key: `reads/${r.id}`, ...x, display: x.display!.replace(/\.$/, '') }; });
 const data = Object.fromEntries(reads.map(r => [r.key, { src: `${base}${r.file}`, raw: r.raw, display: r.display, duration: r.duration }]));
 const first = reads[0];
 ---

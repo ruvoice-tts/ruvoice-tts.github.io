@@ -8,7 +8,7 @@ const { packs } = await getSite();
   <p class="eyebrow" data-thread="pin">Паки</p>
   <h2 class="sec-title" id="packs-title">Паки голосов</h2>
   <p class="intro">Дополнительные голоса ставятся из файла прямо в приложении.</p>
-  <div class="grid">{packs.slice(0, 4).map(p => <PackCard p={p} compact />)}</div>
+  <div class="grid">{packs.map(p => <PackCard p={p} compact />)}</div>
   <a class="more" href="/packs/" id="packs-more">Все паки и как их поставить</a>
 </section>
 
@@ -18,7 +18,9 @@ const { packs } = await getSite();
 </script>
 
 <style>
-  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); margin-top: 8px; }
+  /* две колонки: 4 пака — 2 × 2, 6 — 3 × 2, без карточки-сироты в последнем ряду */
+  .grid { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); margin-top: 8px; }
+  @media (min-width: 760px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .more {
     align-self: flex-start; display: inline-flex; align-items: center; min-height: 48px; font-weight: 650; font-size: 1.0625rem;
     text-decoration-color: var(--amber); text-decoration-thickness: 2px; text-underline-offset: 5px;

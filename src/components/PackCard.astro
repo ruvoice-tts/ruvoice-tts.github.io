@@ -18,7 +18,7 @@ const Tag = compact ? 'h3' : 'h2';
 ---
 <section class:list={['pack', { compact }]} id={compact ? undefined : `pack-${p.id}`} aria-labelledby={`${compact ? 'tease' : 'pack'}-${p.id}-title`}>
   <Tag id={`${compact ? 'tease' : 'pack'}-${p.id}-title`}>{p.title}</Tag>
-  <p class="facts">{n > 0 && <>{n} {pluralRu(n, 'голос', 'голоса', 'голосов')} · </>}{lang} · {size}</p>
+  <p class="facts">{[n > 0 && `${n}\u00a0${pluralRu(n, 'голос', 'голоса', 'голосов')}`, lang, size].filter(Boolean).join(' · ')}</p>
   {!compact && p.minVersion && <p class="meta">Нужна версия {p.minVersion} или новее</p>}
   {p.note && <p class="note">{p.note}</p>}
   {!compact && p.license && <p class="meta">Лицензия: {p.license}</p>}
@@ -60,7 +60,8 @@ const Tag = compact ? 'h3' : 'h2';
   .facts { margin: 0; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
   .note, .meta { margin: 0; color: var(--ink-2); }
   .meta { font-size: .9375rem; }
-  .actions { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-top: 8px; }
+  /* кнопки прижаты к низу: в ряду карточек они стоят на одной линии, сколько бы ни было текста выше */
+  .actions { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-top: auto; padding-top: 12px; }
   .pack-dl {
     display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 10px 0 22px; border-radius: 999px;
     background: var(--indigo); color: var(--on-indigo); font-weight: 650; text-decoration: none;
