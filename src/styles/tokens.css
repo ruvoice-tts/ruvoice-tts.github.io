@@ -1,0 +1,44 @@
+/* Токены «Нить голоса». Светлая тема «Бумага» — на :root, тёмная «Ночное чтение» — по системе и по кнопке. */
+:root {
+  --bg: #F5F3EF;
+  --bg-2: #ECE8E0;
+  --card: #FFFEFB;
+  --ink: #17192F;
+  --ink-2: #474A66;
+  --ink-3: #686B85;
+  --indigo: #3A44C0;
+  --on-indigo: #FFFFFF;
+  --indigo-2: #2A3299;
+  --accent-word: #3A44C0;
+  --amber: #EBA01C;
+  --amber-glow: rgba(235, 160, 28, .38);
+  --hl: #FFE2A3;
+  --lav: #CDD0F7;
+  --peach: #FFDCC6;
+  --line: #DDD7CB;
+  --outline: #8A8578;
+  --hi: rgba(255, 255, 255, .9);
+  --shadow: rgba(22, 24, 46, .2);
+  --grain-alpha: .05;
+  --font-display: "Literata Variable", Georgia, "Times New Roman", serif;
+  --font-ui: "Golos Text Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C0E24; --bg-2: #12153A; --card: #161A42; --ink: #F2EFE8; --ink-2: #BDBFDA; --ink-3: #9396B8;
+    --indigo: #A5ADFF; --on-indigo: #0C0E24; --indigo-2: #C4C9FF; --accent-word: #FFB938;
+    --amber: #FFB938; --amber-glow: rgba(255, 185, 56, .5); --hl: rgba(255, 185, 56, .3);
+    --lav: #2E3290; --peach: #4A2D58; --line: #272B5C; --outline: #6F74AA;
+    --hi: rgba(255, 255, 255, .07); --shadow: rgba(0, 0, 0, .55); --grain-alpha: .07;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C0E24; --bg-2: #12153A; --card: #161A42; --ink: #F2EFE8; --ink-2: #BDBFDA; --ink-3: #9396B8;
+  --indigo: #A5ADFF; --on-indigo: #0C0E24; --indigo-2: #C4C9FF; --accent-word: #FFB938;
+  --amber: #FFB938; --amber-glow: rgba(255, 185, 56, .5); --hl: rgba(255, 185, 56, .3);
+  --lav: #2E3290; --peach: #4A2D58; --line: #272B5C; --outline: #6F74AA;
+  --hi: rgba(255, 255, 255, .07); --shadow: rgba(0, 0, 0, .55); --grain-alpha: .07;
+  color-scheme: dark;
+}

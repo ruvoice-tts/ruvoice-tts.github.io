@@ -1,0 +1,20 @@
+{
+  "name": "ruvoice-site",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fontsource-variable/golos-text": "5.3.0",
+    "@fontsource-variable/literata": "5.3.0",
+    "astro": "6.4.8"
+  },
+  "devDependencies": {
+    "node-html-parser": "9.0.5",
+    "vitest": "5.0.5"
+  }
+}
