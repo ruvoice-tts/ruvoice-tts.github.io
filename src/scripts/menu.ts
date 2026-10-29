@@ -27,6 +27,10 @@ export function initHeader(): void {
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncTheme);
   syncTheme();
 
+  const syncHeight = () => root.style.setProperty('--header-h', `${header.offsetHeight}px`);
+  new ResizeObserver(syncHeight).observe(header);
+  syncHeight();
+
   const onScroll = () => header.classList.toggle('is-stuck', scrollY > 8);
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();

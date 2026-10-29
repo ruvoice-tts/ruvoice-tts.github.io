@@ -1,5 +1,6 @@
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+/* якоря и фокус не уходят под липкую шапку: её высоту (растёт при крупном шрифте) пишет menu.ts */
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--header-h, 76px) + 12px); }
 body {
   margin: 0;
   background: var(--bg);
