@@ -11,7 +11,7 @@ const { release } = await getSite();
     <p class="intro">Возможно, ссылка устарела. Всё нужное есть на главной.</p>
     <div class="links">
       <a class="play-pill" href="/">На главную</a>
-      <a class="play-pill" href={release.app.full.url}>Скачать RuVoice<span class="vh">: полная сборка, версия {release.app.version}, APK, {formatMB(release.app.full.size)}</span></a>
+      <a class="play-pill" href={release.app.full.url} data-goatcounter-click="apk-full">Скачать RuVoice<span class="vh">: полная сборка, версия {release.app.version}, APK, {formatMB(release.app.full.size)}</span></a>
     </div>
   </main>
 </Base>

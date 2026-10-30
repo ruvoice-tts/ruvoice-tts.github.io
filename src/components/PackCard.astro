@@ -19,7 +19,7 @@ const Tag = compact ? 'h3' : 'h2';
 <section class:list={['pack', { compact }]} id={compact ? undefined : `pack-${p.id}`} aria-labelledby={`${compact ? 'tease' : 'pack'}-${p.id}-title`}>
   <Tag id={`${compact ? 'tease' : 'pack'}-${p.id}-title`}>{p.title}</Tag>
   <div class="actions">
-    <a class="pack-dl" href={p.url} id={`${compact ? 'tease' : 'pack'}-${p.id}-dl`}>Скачать пак<span class="vh"> «{p.title}», ZIP,</span> <span class="sz">{size}</span></a>
+    <a class="pack-dl" href={p.url} data-goatcounter-click={`pack-${p.id}`} id={`${compact ? 'tease' : 'pack'}-${p.id}-dl`}>Скачать пак<span class="vh"> «{p.title}», ZIP,</span> <span class="sz">{size}</span></a>
     {list[0] && (
       <button type="button" class="play-pill" data-play={src(list[0].samples.book)}>
         <span class="i" aria-hidden="true" set:html={play} /><span class="label">Послушать</span><span class="vh">: {list[0].name ?? list[0].id}, пак «{p.title}»</span>

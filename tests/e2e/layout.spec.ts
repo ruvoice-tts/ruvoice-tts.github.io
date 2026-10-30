@@ -33,12 +33,12 @@ for (const width of [390, 360]) {
   }
 }
 
-test('страница не ходит на чужие адреса', async ({ page }) => {
+test('страница не ходит на чужие адреса, кроме скрипта счётчика', async ({ page }) => {
   const hosts = new Set<string>();
   page.on('request', r => hosts.add(new URL(r.url()).hostname));
   await page.goto('/');
   await page.waitForLoadState('networkidle');
-  expect([...hosts]).toEqual(['localhost']);
+  expect([...hosts].sort()).toEqual(['gc.zgo.at', 'localhost']);
 });
 
 // В разметке «Скачать» сразу после названия пака (чтецу — второй свайп), а на экране кнопки внизу карточки.

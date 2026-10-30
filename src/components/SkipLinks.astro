@@ -10,7 +10,7 @@ const home = path === '/';
 const packs = home ? '#packs' : path === '/packs/' ? '#pack-list' : '/packs/';
 ---
 <div class="skips">
-  <a class="skip" id="skip-full" href={full.url}>Скачать полную сборку {version}, APK, {formatMB(full.size)}</a>
+  <a class="skip" id="skip-full" href={full.url} data-goatcounter-click="apk-full">Скачать полную сборку {version}, APK, {formatMB(full.size)}</a>
   <a class="skip" id="skip-card" href={home ? '#download' : '/#download'}>Другие варианты скачивания</a>
   <a class="skip" id="skip-packs" href={packs}>Скачать паки голосов</a>
 </div>

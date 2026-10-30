@@ -2,6 +2,8 @@
 import { formatMB } from '../lib/format';
 import { recommend, type Lang } from '../lib/wizard';
 
+declare global { interface Window { goatcounter?: { bind_events?: () => void } } }
+
 interface Item { url: string; size: number }
 interface WizardData {
   version: string; full: Item; lite?: Item; rustore: string;
@@ -29,9 +31,9 @@ export function initWizard(): void {
     if (focus) (steps[i].querySelector<HTMLInputElement>('input:checked') ?? steps[i].querySelector('input'))?.focus();
   };
   /** Ссылка, у которой видимая подпись целиком входит в имя для чтеца: [скрыто, видно, скрыто, видно…]. */
-  const link = (href: string, parts: string[]) => {
+  const link = (href: string, parts: string[], event: string) => {
     const li = document.createElement('li'), a = document.createElement('a');
-    a.href = href; a.className = 'play-pill result-link';
+    a.href = href; a.className = 'play-pill result-link'; a.dataset.goatcounterClick = event;
     parts.forEach((t, i) => {
       if (!t) return;
       const span = document.createElement('span');
@@ -58,15 +60,17 @@ export function initWizard(): void {
     const name = { full: 'Полная сборка', lite: 'Лёгкая сборка', rustore: 'RuStore' }[r.build];
     title.textContent = `Вам подойдёт: ${name}`;
     list.replaceChildren();
-    if (r.build === 'rustore') list.append(link(data.rustore, ['', 'Открыть в RuStore']));
+    if (r.build === 'rustore') list.append(link(data.rustore, ['', 'Открыть в RuStore'], 'rustore'));
     else {
       const it = r.build === 'full' ? data.full : data.lite!;
-      list.append(link(it.url, ['Скачать: ', name, `, версия ${data.version}, APK, `, formatMB(it.size)]));
+      list.append(link(it.url, ['Скачать: ', name, `, версия ${data.version}, APK, `, formatMB(it.size)], `apk-${r.build}`));
     }
     for (const id of r.packs) {
       const p = data.packs.find(x => x.id === id)!;
-      list.append(link(p.url, ['Скачать: ', `Пак «${p.title}»`, ', ZIP, ', formatMB(p.size)]));
+      list.append(link(p.url, ['Скачать: ', `Пак «${p.title}»`, ', ZIP, ', formatMB(p.size)], `pack-${id}`));
     }
+    // Счётчик привязывает ссылки при загрузке страницы, эти появились позже. Без счётчика (блокировщик) просто не считаются.
+    window.goatcounter?.bind_events?.();
     note.textContent = r.note;
     result.hidden = false;
     title.focus();
